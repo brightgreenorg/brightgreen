@@ -1,0 +1,47 @@
+# Node / Next.js
+node_modules/
+.next/
+.next/cache/
+out/
+dist/
+build/
+
+# Vercel (local project/link info)
+.vercel/
+
+# Environment variables (keep example only)
+.env*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Caches
+.cache/
+.parcel-cache/
+.turbo/
+.eslintcache
+.stylelintcache
+
+# TypeScript
+*.tsbuildinfo
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.code-workspace
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Misc
+.pnp.cjs
+.pnp.loader.mjs

@@ -142,16 +142,14 @@
     color: #111;
   }
 
-  /* HERO: full-bleed background that swaps images by breakpoint, always CROPS (cover) */
+  /* HERO layout helpers (no images here; Next <Image> provides art) */
   .hero {
     position: relative;
     overflow: hidden;
     min-height: clamp(420px, 72vh, 760px);
     display: grid;
     align-items: stretch;
-    isolation: isolate; /* keep overlay effects contained */
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    isolation: isolate;
   }
 
   .hero__inner {
@@ -160,55 +158,15 @@
     min-height: inherit;
     padding-block: var(--s-16);
   }
+
   .hero__copy { max-width: 60ch; }
   .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; }
 
-  /* Background images: start with mobile crop */
-  .hero--home {
-    background:
-      linear-gradient(180deg, rgba(126,217,87,.32), rgba(244,208,63,.28))
-      , image-set(
-          url("/images/hero-mobile.avif") type("image/avif"),
-          url("/images/hero-mobile.jpg") type("image/jpeg")
-        );
-    background-size: cover;          /* <-- key: crop to fill */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: #000;          /* pleasant load fallback */
-  }
-
-  /* Tablet swap */
+  /* Larger hero height on tablet+ */
   @media (min-width: 768px) {
     .hero { min-height: clamp(520px, 70vh, 800px); }
     .hero__inner { padding-block: var(--s-20); }
-    .hero--home {
-      background:
-        linear-gradient(180deg, rgba(126,217,87,.32), rgba(244,208,63,.28))
-        , image-set(
-            url("/images/hero-tablet.avif") type("image/avif"),
-            url("/images/hero-tablet.jpg") type("image/jpeg")
-          );
-      background-size: cover;
-      background-position: center;
-    }
   }
-
-  /* Desktop swap */
-  @media (min-width: 1024px) {
-    .hero--home {
-      background:
-        linear-gradient(180deg, rgba(126,217,87,.28), rgba(244,208,63,.24))
-        , image-set(
-            url("/images/hero-desktop.avif") type("image/avif"),
-            url("/images/hero-desktop.jpg") type("image/jpeg")
-          );
-      background-size: cover;
-      background-position: center 35%; /* lift subject slightly on wide screens */
-    }
-  }
-
-  /* Edge-to-edge alternative (no border radius) if you want the hero to touch the viewport edges) */
-  .hero--edge { border-radius: 0; }
 }
 
 /* --------------------------------

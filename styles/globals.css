@@ -1,4 +1,8 @@
 /* styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @layer reset, tokens, base, components, utilities;
 
 /* --------------------------------
@@ -125,15 +129,31 @@
   .prose code { background:#fff; border:1px solid var(--border); padding: 2px 6px; border-radius: 6px; }
   .prose pre { background:#111; color:#f2f2f2; padding:14px; border-radius:12px; border:1px solid #222; overflow:auto; }
 
+  /* Badge used in Hero */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font: 700 12px/1 var(--font-display, "League Spartan"), system-ui, sans-serif;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: #111;
+  }
+
   /* HERO: full-bleed background that swaps images by breakpoint */
   .hero {
     position: relative;
     overflow: hidden;
+    /* height that feels big on desktop but not overwhelming on phones */
     min-height: clamp(420px, 72vh, 760px);
     display: grid;
     align-items: stretch;
-    isolation: isolate;
+    isolation: isolate; /* keeps overlay effects contained */
   }
+
+  /* Inner layout */
   .hero__inner {
     display: grid;
     align-items: center;
@@ -143,38 +163,41 @@
   .hero__copy { max-width: 60ch; }
   .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; }
 
+  /* Background images: start with mobile crop */
   .hero--home {
     background:
-      linear-gradient(180deg, rgba(126,217,87,.32), rgba(244,208,63,.28)),
-      image-set(
-        url("/images/hero-mobile.avif") type("image/avif"),
-        url("/images/hero-mobile.jpg") type("image/jpeg")
-      );
+      linear-gradient(180deg, rgba(126,217,87,.32), rgba(244,208,63,.28))
+      , image-set(
+          url("/images/hero-mobile.avif") type("image/avif"),
+          url("/images/hero-mobile.jpg") type("image/jpeg")
+        );
     background-size: cover;
     background-position: center;
   }
 
+  /* Tablet swap */
   @media (min-width: 768px) {
     .hero { min-height: clamp(520px, 70vh, 800px); }
     .hero--home {
       background:
-        linear-gradient(180deg, rgba(126,217,87,.32), rgba(244,208,63,.28)),
-        image-set(
-          url("/images/hero-tablet.avif") type("image/avif"),
-          url("/images/hero-tablet.jpg") type("image/jpeg")
-        );
+        linear-gradient(180deg, rgba(126,217,87,.32), rgba(244,208,63,.28))
+        , image-set(
+            url("/images/hero-tablet.avif") type("image/avif"),
+            url("/images/hero-tablet.jpg") type("image/jpeg")
+          );
     }
   }
 
+  /* Desktop swap */
   @media (min-width: 1024px) {
     .hero--home {
       background:
-        linear-gradient(180deg, rgba(126,217,87,.28), rgba(244,208,63,.24)),
-        image-set(
-          url("/images/hero-desktop.avif") type("image/avif"),
-          url("/images/hero-desktop.jpg") type("image/jpeg")
-        );
-      background-position: center 35%;
+        linear-gradient(180deg, rgba(126,217,87,.28), rgba(244,208,63,.24))
+        , image-set(
+            url("/images/hero-desktop.avif") type("image/avif"),
+            url("/images/hero-desktop.jpg") type("image/jpeg")
+          );
+      background-position: center 35%; /* lift subject slightly */
     }
   }
 }

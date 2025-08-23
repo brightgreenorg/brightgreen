@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="240" height="64" viewBox="0 0 240 64" aria-labelledby="title">
-  <title id="title">Bright Green — White Variant</title>
-  <circle cx="32" cy="32" r="20" fill="#FFFFFF" />
-  <text x="72" y="44" font-family="Pacifico, cursive" font-size="32" fill="#FFFFFF">Bright Green</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="80" viewBox="0 0 420 80">
+  <g transform="translate(8,8)">
+    <circle cx="32" cy="32" r="28" fill="#fff"></circle>
+  </g>
+  <text x="80" y="52" font-family="Pacifico, system-ui" font-size="40" fill="#fff">Bright Green</text>
 </svg>

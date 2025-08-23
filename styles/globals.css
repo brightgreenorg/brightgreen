@@ -20,8 +20,7 @@
 }
 
 /* --------------------------------
-   2) TOKENS (Design system)
-   Sourced from docs/Style.html
+   2) TOKENS
 ---------------------------------- */
 @layer tokens {
   :root {
@@ -49,7 +48,6 @@
     --s-16:64px; --s-20:80px; --s-24:96px; --s-28:112px; --s-32:128px;
   }
 
-  /* Optional: dark theme via [data-theme="dark"] on <html> */
   html[data-theme="dark"] {
     --bg:#111213; --ink:#F4F4F2; --muted:#b6b2aa; --border:#2a2a2a;
     --shadow:0 10px 40px rgba(0,0,0,.3);
@@ -61,7 +59,7 @@
 }
 
 /* --------------------------------
-   3) BASE (HTML element primitives)
+   3) BASE
 ---------------------------------- */
 @layer base {
   html { scroll-behavior: smooth; }
@@ -73,7 +71,6 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Headings use League Spartan via next/font in layout.jsx */
   h1, h2, h3 { font-family: var(--font-display, "League Spartan"), system-ui, sans-serif; }
   h1 { font-size: 42px; line-height: 1.1; }
   h2 { font-size: 28px; line-height: 1.2; margin-top: var(--s-8); }
@@ -82,14 +79,12 @@
   a { color: var(--violet); }
   a:hover { text-decoration: underline; }
 
-  /* Focus visibility */
   :where(a, button, input, select, textarea, [tabindex]):focus { outline: none; }
   :where(a, button, input, select, textarea, [tabindex]):focus-visible {
     box-shadow: var(--focus-ring);
     border-radius: 8px;
   }
 
-  /* Motion preferences */
   @media (prefers-reduced-motion: reduce) {
     * {
       animation-duration: .001ms !important;
@@ -101,7 +96,7 @@
 }
 
 /* --------------------------------
-   4) COMPONENTS (site-wide only)
+   4) COMPONENTS
 ---------------------------------- */
 @layer components {
   .container { max-width: var(--container-lg); padding-inline: 24px; margin-inline: auto; }
@@ -120,7 +115,6 @@
   .btn--alt { background: var(--yellow); color: #111; }
   .btn--outline { background: #fff; color: #111; border: 2px solid #111; }
 
-  /* Prose defaults (for MD/MDX content) */
   .prose { max-width: 72ch; font-size: 1rem; line-height: 1.65; }
   .prose p + p { margin-top: var(--s-4); }
   .prose h2 { margin-top: var(--s-12); }
@@ -129,27 +123,20 @@
   .prose code { background:#fff; border:1px solid var(--border); padding: 2px 6px; border-radius: 6px; }
   .prose pre { background:#111; color:#f2f2f2; padding:14px; border-radius:12px; border:1px solid #222; overflow:auto; }
 
-  /* Badge (used in hero when needed) */
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 10px;
-    border-radius: 999px;
-    font: 700 12px/1 var(--font-display, "League Spartan"), system-ui, sans-serif;
-    border: 1px solid var(--border);
-    background: #fff;
-    color: #111;
-  }
-
-  /* HERO layout helpers (no images here; Next <Image> provides art) */
+  /* ---- HERO (full-bleed background, always cropped) ---- */
   .hero {
     position: relative;
     overflow: hidden;
     min-height: clamp(420px, 72vh, 760px);
     display: grid;
     align-items: stretch;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
     isolation: isolate;
+    background-color: #000;            /* pleasant loading color */
+    background-repeat: no-repeat;
+    background-position: center !important;
+    background-size: cover !important; /* FORCE crop-to-fill */
   }
 
   .hero__inner {
@@ -158,19 +145,46 @@
     min-height: inherit;
     padding-block: var(--s-16);
   }
-
   .hero__copy { max-width: 60ch; }
   .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; }
 
-  /* Larger hero height on tablet+ */
+  /* Default (mobile-first) image set */
+  .hero--home {
+    background-image:
+      linear-gradient(180deg, rgba(126,217,87,.32), rgba(244,208,63,.28)),
+      image-set(
+        url("/images/hero-mobile.avif") type("image/avif"),
+        url("/images/hero-mobile.jpg") type("image/jpeg")
+      );
+  }
+
   @media (min-width: 768px) {
     .hero { min-height: clamp(520px, 70vh, 800px); }
-    .hero__inner { padding-block: var(--s-20); }
+    .hero--home {
+      background-image:
+        linear-gradient(180deg, rgba(126,217,87,.32), rgba(244,208,63,.28)),
+        image-set(
+          url("/images/hero-tablet.avif") type("image/avif"),
+          url("/images/hero-tablet.jpg") type("image/jpeg")
+        );
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero--home {
+      background-image:
+        linear-gradient(180deg, rgba(126,217,87,.28), rgba(244,208,63,.24)),
+        image-set(
+          url("/images/hero-desktop.avif") type("image/avif"),
+          url("/images/hero-desktop.jpg") type("image/jpeg")
+        );
+      background-position: center 35% !important; /* lift subject a bit */
+    }
   }
 }
 
 /* --------------------------------
-   5) UTILITIES (low-level helpers)
+   5) UTILITIES
 ---------------------------------- */
 @layer utilities {
   .sr-only {
@@ -186,7 +200,7 @@
 }
 
 /* --------------------------------
-   6) PRINT (simple, clean output)
+   6) PRINT
 ---------------------------------- */
 @media print {
   @page { margin: 0.5in; }

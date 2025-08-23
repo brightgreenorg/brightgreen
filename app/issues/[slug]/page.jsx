@@ -1,24 +1,46 @@
 // app/issues/[slug]/page.jsx
-import { getIssueBySlug } from "@/lib/mdx";
+import { notFound } from 'next/navigation';
+import { getIssueBySlug, listIssueSlugs } from '@/lib/mdx';
 
 export async function generateStaticParams() {
-  const { listIssueSlugs } = await import("@/lib/mdx");
-  const slugs = await listIssueSlugs();
+  const slugs = await listIssueSlugs(); // only build pages that actually exist on disk
   return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }) {
-  const issue = await getIssueBySlug(params.slug);
-  return { title: issue.meta.title, description: issue.meta.description };
+  const { slug } = params;
+  try {
+    const issue = await getIssueBySlug(slug);
+    const title = issue?.title ?? issue?.frontmatter?.title ?? slug;
+    const description = issue?.description ?? issue?.frontmatter?.description ?? '';
+    return { title: `${title} · Issues`, description };
+  } catch {
+    return { title: `Issue · ${slug}` };
+  }
 }
 
 export default async function IssuePage({ params }) {
-  const issue = await getIssueBySlug(params.slug);
+  const { slug } = params;
+
+  let issue;
+  try {
+    issue = await getIssueBySlug(slug);
+  } catch {
+    notFound();
+  }
+  if (!issue) notFound();
+
+  const title = issue.title ?? issue.frontmatter?.title ?? slug;
+  const description = issue.description ?? issue.frontmatter?.description ?? '';
+  const html = issue.html ?? '';
 
   return (
-    <main className="container" style={{ padding: "40px 0" }}>
-      <h1>{issue.meta.title}</h1>
-      <article className="prose" dangerouslySetInnerHTML={{ __html: issue.html }} />
-    </main>
+    <div className="container">
+      <article className="prose">
+        <h1>{title}</h1>
+        {description && <p className="muted">{description}</p>}
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      </article>
+    </div>
   );
 }

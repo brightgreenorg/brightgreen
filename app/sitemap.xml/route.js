@@ -3,8 +3,7 @@ import { listIssueSlugs } from '@/lib/mdx';
 
 // Build once per day
 export const revalidate = 86400; // seconds
-// Optional: run at the edge
-export const runtime = 'edge';
+export const runtime = 'nodejs'; // must be Node.js since lib/mdx uses fs/path
 
 export async function GET() {
   // Configure SITE_URL in Vercel → Project → Settings → Environment Variables

@@ -21,7 +21,7 @@
 
 /* --------------------------------
    2) TOKENS (Design system)
-   Sourced from Style.html
+   Sourced from docs/Style.html
 ---------------------------------- */
 @layer tokens {
   :root {
@@ -129,7 +129,7 @@
   .prose code { background:#fff; border:1px solid var(--border); padding: 2px 6px; border-radius: 6px; }
   .prose pre { background:#111; color:#f2f2f2; padding:14px; border-radius:12px; border:1px solid #222; overflow:auto; }
 
-  /* Badge used in Hero */
+  /* Badge (used in hero when needed) */
   .badge {
     display: inline-flex;
     align-items: center;
@@ -142,18 +142,18 @@
     color: #111;
   }
 
-  /* HERO: full-bleed background that swaps images by breakpoint */
+  /* HERO: full-bleed background that swaps images by breakpoint, always CROPS (cover) */
   .hero {
     position: relative;
     overflow: hidden;
-    /* height that feels big on desktop but not overwhelming on phones */
     min-height: clamp(420px, 72vh, 760px);
     display: grid;
     align-items: stretch;
-    isolation: isolate; /* keeps overlay effects contained */
+    isolation: isolate; /* keep overlay effects contained */
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
   }
 
-  /* Inner layout */
   .hero__inner {
     display: grid;
     align-items: center;
@@ -171,13 +171,16 @@
           url("/images/hero-mobile.avif") type("image/avif"),
           url("/images/hero-mobile.jpg") type("image/jpeg")
         );
-    background-size: cover;
+    background-size: cover;          /* <-- key: crop to fill */
     background-position: center;
+    background-repeat: no-repeat;
+    background-color: #000;          /* pleasant load fallback */
   }
 
   /* Tablet swap */
   @media (min-width: 768px) {
     .hero { min-height: clamp(520px, 70vh, 800px); }
+    .hero__inner { padding-block: var(--s-20); }
     .hero--home {
       background:
         linear-gradient(180deg, rgba(126,217,87,.32), rgba(244,208,63,.28))
@@ -185,6 +188,8 @@
             url("/images/hero-tablet.avif") type("image/avif"),
             url("/images/hero-tablet.jpg") type("image/jpeg")
           );
+      background-size: cover;
+      background-position: center;
     }
   }
 
@@ -197,9 +202,13 @@
             url("/images/hero-desktop.avif") type("image/avif"),
             url("/images/hero-desktop.jpg") type("image/jpeg")
           );
-      background-position: center 35%; /* lift subject slightly */
+      background-size: cover;
+      background-position: center 35%; /* lift subject slightly on wide screens */
     }
   }
+
+  /* Edge-to-edge alternative (no border radius) if you want the hero to touch the viewport edges) */
+  .hero--edge { border-radius: 0; }
 }
 
 /* --------------------------------

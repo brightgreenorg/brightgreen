@@ -5,7 +5,7 @@ const nextConfig = {
 
   images: {
     // AVIF only; non-AVIF browsers will fall back to the original JPEG.
-    formats: ["image/avif"],
+    formats: ['image/avif'],
 
     // Same responsive sizes as before.
     deviceSizes: [360, 414, 640, 768, 1024, 1280, 1536, 1920, 2560, 3000],
@@ -21,13 +21,14 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Match both AVIF and JPG hero assets
-        source: "/images/:hero(hero-(desktop|tablet|mobile)).:ext(avif|jpg)",
+        // Match both AVIF and JPG hero assets (desktop/tablet/mobile) without regex capture groups.
+        // Files: /public/images/hero-desktop.avif|jpg, hero-tablet.*, hero-mobile.*
+        source: '/images/hero-:device.:ext',
         headers: [
           // Short browser cache to avoid sticky old images after a swap
-          { key: "Cache-Control", value: "public, max-age=300, must-revalidate" },
+          { key: 'Cache-Control', value: 'public, max-age=300, must-revalidate' },
           // Short CDN cache + generous SWR so viewers get instant responses while we revalidate
-          { key: "Surrogate-Control", value: "s-maxage=3600, stale-while-revalidate=86400" },
+          { key: 'Surrogate-Control', value: 's-maxage=3600, stale-while-revalidate=86400' },
         ],
       },
     ];

@@ -1,10 +1,21 @@
 {
   "headers": [
     {
-      "source": "/images/(.*)\\.(avif|jpg)",
+      "source": "/images/:path*.(avif|jpg)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.brightgreen.org" }],
+      "destination": "https://brightgreen.org/:path*",
+      "permanent": true
     }
   ]
 }

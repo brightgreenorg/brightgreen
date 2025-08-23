@@ -1,14 +1,22 @@
 // app/sitemap.xml/route.js
 import { listIssueSlugs } from '@/lib/mdx';
 
-export async function GET() {
-  // You can set SITE_URL in Vercel → Project → Settings → Environment Variables later if you like.
-  const BASE = process.env.SITE_URL || 'https://brightgreen.org';
+// Build once per day
+export const revalidate = 86400; // seconds
+// Optional: run at the edge
+export const runtime = 'edge';
 
-  const slugs = await listIssueSlugs(); // only real files
+export async function GET() {
+  // Configure SITE_URL in Vercel → Project → Settings → Environment Variables
+  const BASE = (process.env.SITE_URL || 'https://brightgreen.org').replace(/\/+$/, '');
+
+  const slugs = await listIssueSlugs(); // only real files on disk
+
+  // Choose one policy; here we go with NO trailing slashes.
   const staticPaths = ['', 'about', 'press', 'donate', 'volunteer', 'issues', 'privacy', 'terms', 'compliance'];
+
   const allPaths = [
-    ...staticPaths.map((p) => `${BASE}/${p}`.replace(/\/+$/, '/')),
+    ...staticPaths.map((p) => (p ? `${BASE}/${p}` : `${BASE}`)),
     ...slugs.map((slug) => `${BASE}/issues/${slug}`),
   ];
 
@@ -19,11 +27,13 @@ ${allPaths
     (loc) => `<url>
   <loc>${loc}</loc>
   <changefreq>weekly</changefreq>
-  <priority>${/\/issues\/.+$/.test(loc) ? '0.7' : '0.8'}</priority>
+  <priority>${/\/issues\/[^/]+$/.test(loc) ? '0.7' : '0.8'}</priority>
 </url>`
   )
   .join('\n')}
 </urlset>`;
 
-  return new Response(xml, { headers: { 'Content-Type': 'application/xml' } });
+  return new Response(xml, {
+    headers: { 'Content-Type': 'application/xml; charset=utf-8' },
+  });
 }

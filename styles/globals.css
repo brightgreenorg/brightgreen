@@ -71,6 +71,7 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Headings use League Spartan via next/font in layout.jsx */
   h1, h2, h3 { font-family: var(--font-display, "League Spartan"), system-ui, sans-serif; }
   h1 { font-size: 42px; line-height: 1.1; }
   h2 { font-size: 28px; line-height: 1.2; margin-top: var(--s-8); }
@@ -115,6 +116,7 @@
   .btn--alt { background: var(--yellow); color: #111; }
   .btn--outline { background: #fff; color: #111; border: 2px solid #111; }
 
+  /* Prose defaults (for MD/MDX content) */
   .prose { max-width: 72ch; font-size: 1rem; line-height: 1.65; }
   .prose p + p { margin-top: var(--s-4); }
   .prose h2 { margin-top: var(--s-12); }
@@ -123,20 +125,16 @@
   .prose code { background:#fff; border:1px solid var(--border); padding: 2px 6px; border-radius: 6px; }
   .prose pre { background:#111; color:#f2f2f2; padding:14px; border-radius:12px; border:1px solid #222; overflow:auto; }
 
-  /* ---- HERO (full-bleed background, always cropped) ---- */
+  /* ---- HERO layout for Next <Image fill> (no background images here) ---- */
   .hero {
     position: relative;
     overflow: hidden;
     min-height: clamp(420px, 72vh, 760px);
     display: grid;
     align-items: stretch;
+    isolation: isolate;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    isolation: isolate;
-    background-color: #000;            /* pleasant loading color */
-    background-repeat: no-repeat;
-    background-position: center !important;
-    background-size: cover !important; /* FORCE crop-to-fill */
   }
 
   .hero__inner {
@@ -145,41 +143,13 @@
     min-height: inherit;
     padding-block: var(--s-16);
   }
+
   .hero__copy { max-width: 60ch; }
   .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; }
 
-  /* Default (mobile-first) image set */
-  .hero--home {
-    background-image:
-      linear-gradient(180deg, rgba(126,217,87,.32), rgba(244,208,63,.28)),
-      image-set(
-        url("/images/hero-mobile.avif") type("image/avif"),
-        url("/images/hero-mobile.jpg") type("image/jpeg")
-      );
-  }
-
   @media (min-width: 768px) {
     .hero { min-height: clamp(520px, 70vh, 800px); }
-    .hero--home {
-      background-image:
-        linear-gradient(180deg, rgba(126,217,87,.32), rgba(244,208,63,.28)),
-        image-set(
-          url("/images/hero-tablet.avif") type("image/avif"),
-          url("/images/hero-tablet.jpg") type("image/jpeg")
-        );
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .hero--home {
-      background-image:
-        linear-gradient(180deg, rgba(126,217,87,.28), rgba(244,208,63,.24)),
-        image-set(
-          url("/images/hero-desktop.avif") type("image/avif"),
-          url("/images/hero-desktop.jpg") type("image/jpeg")
-        );
-      background-position: center 35% !important; /* lift subject a bit */
-    }
+    .hero__inner { padding-block: var(--s-20); }
   }
 }
 

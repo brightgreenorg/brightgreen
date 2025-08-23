@@ -4,14 +4,16 @@ const nextConfig = {
   reactStrictMode: true,
 
   images: {
-    // AVIF only; non‑AVIF browsers will fall back to the original JPEG.
+    // AVIF only; non-AVIF browsers will fall back to the original JPEG.
     formats: ["image/avif"],
 
     // Same responsive sizes as before.
     deviceSizes: [360, 414, 640, 768, 1024, 1280, 1536, 1920, 2560, 3000],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
 
-    // Assume frequent updates: cache optimized variants for just 1 hour.
+    // NOTE (Aug 2025): TTL is intentionally short (1 hour) while brand/hero art
+    // is still evolving. Revisit later: once assets stabilize, raise this value
+    // (e.g., 31536000 = 1 year) for performance, and/or move hero rules to vercel.json.
     minimumCacheTTL: 3600,
   },
 

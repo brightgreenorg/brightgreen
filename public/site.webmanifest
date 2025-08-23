@@ -1,0 +1,11 @@
+{
+  "name": "Bright Green",
+  "short_name": "BrightGreen",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFAF7",
+  "theme_color": "#8E44AD",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

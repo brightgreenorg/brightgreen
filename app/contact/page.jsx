@@ -1,12 +1,24 @@
-// app/about/page.jsx  (repeat pattern for others, edit title/desc/body)
-export const metadata = { title: "About", description: "Who we are and how we work." };
-export default function About() {
+// app/contact/page.jsx
+export const metadata = {
+  title: "Contact",
+  description: "Reach out with questions or ideas.",
+};
+
+const MAILTO = "mailto:brightgreenpac@gmail.com?subject=Hello%20from%20the%20site";
+
+export default function ContactPage() {
   return (
     <main className="container" style={{ padding: "40px 0" }}>
-      <h1>About Bright Green</h1>
+      <h1>Contact</h1>
       <div className="prose">
-        <p>Bright Green PAC advocates for innovation, fairness, and sustainability.</p>
+        <p>
+          We welcome thoughtful feedback, collaboration ideas, and questions.
+          Email us directly or use the button below.
+        </p>
       </div>
+      <a className="btn btn--secondary" href={MAILTO} style={{ marginTop: 16 }}>
+        Email Bright Green
+      </a>
     </main>
   );
 }

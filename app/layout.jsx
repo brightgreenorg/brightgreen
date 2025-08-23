@@ -24,7 +24,17 @@ export const metadata = {
   title: { default: 'Bright Green PAC', template: '%s · Bright Green PAC' },
   description:
     'Bright Green is a people‑powered political action committee from Portland, Oregon USA focused on innovation, fairness, and sustainability.',
-  icons: { icon: '/favicon.ico', apple: '/apple-touch-icon.png' },
+  // Best‑practice favicon set
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-16.png', type: 'image/png', sizes: '16x16' },
+      { url: '/favicon-32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon-48.png', type: 'image/png', sizes: '48x48' },
+      { url: '/favicon-64.png', type: 'image/png', sizes: '64x64' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+  },
   manifest: '/site.webmanifest',
   openGraph: {
     type: 'website',

@@ -1,12 +1,57 @@
 # top-most EditorConfig file
 root = true
 
-[*]                        # applies to all files
+[*]                           # applies to all files
 charset = utf-8
-end_of_line = lf           # Unix-style line endings (LF)
+end_of_line = lf              # Unix-style line endings (LF)
 insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+tab_width = 2
+
+# Makefiles still use hard tabs
+[Makefile]
+indent_style = tab
+
+# Prose: don't strip trailing spaces (used for line breaks)
+# and don't nag about line length
+[*.{md,mdx}]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# Explicit for Markdown in /content
+[content/**/*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# Common web/code files (explicit, though inherited)
+[*.{js,jsx,ts,tsx,mjs,cjs,html,css,scss}]
+indent_size = 2
+
+# Data/config files
+[*.{json,yml,yaml}]
+indent_size = 2
+
+# JSON/manifest: ensure LF + final newline (explicit)
+[*.{json,webmanifest}]
+end_of_line = lf
+insert_final_newline = true
+
+# SVG: explicit 2-space indent
+[*.svg]
 indent_style = space
 indent_size = 2
 
-[*.md]                     # overrides for Markdown files
-trim_trailing_whitespace = false
+# Shell/env scripts (explicit LF for safety)
+[*.{sh,env}]
+end_of_line = lf
+
+# Env-style variants (e.g., .env.local, .env.production)
+[*.env.*]
+end_of_line = lf
+insert_final_newline = true
+
+# Windows batch files can keep CRLF if created there
+[*.{bat,cmd}]
+end_of_line = crlf

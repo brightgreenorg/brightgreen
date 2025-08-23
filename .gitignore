@@ -28,6 +28,7 @@ lerna-debug.log*
 .turbo/
 .eslintcache
 .stylelintcache
+.prettiercache
 
 # TypeScript
 *.tsbuildinfo
@@ -39,8 +40,20 @@ lerna-debug.log*
 
 # OS cruft
 .DS_Store
+._*
 Thumbs.db
 desktop.ini
+
+# Tests / Coverage
+coverage/
+
+# Package manager lockfiles (using npm; keep package-lock.json, ignore others)
+yarn.lock
+pnpm-lock.yaml
+
+# Local package manager caches
+.npm/
+.yarn/
 
 # Misc
 .pnp.cjs

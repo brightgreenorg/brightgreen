@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SkipNav from '../components/SkipNav';
 
-// Fonts: expose League Spartan as a CSS var for headings
+// Fonts
 const league = League_Spartan({
   subsets: ['latin'],
   weight: ['400', '600', '700', '800'],
@@ -21,30 +21,22 @@ const roboto = Roboto({
 
 export const metadata = {
   metadataBase: new URL('https://brightgreen.org'),
-  title: {
-    default: 'Bright Green PAC',
-    template: '%s · Bright Green PAC',
-  },
+  title: { default: 'Bright Green PAC', template: '%s · Bright Green PAC' },
   description:
     'Bright Green is a people‑powered political action committee from Portland, Oregon USA focused on innovation, fairness, and sustainability.',
-  icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
-  },
+  icons: { icon: '/favicon.ico', apple: '/apple-touch-icon.png' },
   manifest: '/site.webmanifest',
   openGraph: {
     type: 'website',
     siteName: 'Bright Green PAC',
     url: 'https://brightgreen.org',
     title: 'Bright Green PAC',
-    description:
-      'Energy, optimism, and clarity for a people‑powered PAC. Join us.',
+    description: 'Energy, optimism, and clarity for a people‑powered PAC. Join us.',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Bright Green PAC',
-    description:
-      'Energy, optimism, and clarity for a people‑powered PAC. Join us.',
+    description: 'Energy, optimism, and clarity for a people‑powered PAC. Join us.',
   },
 };
 
@@ -57,10 +49,15 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${league.variable} ${roboto.className}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${league.variable} ${roboto.className}`}
+      suppressHydrationWarning
+    >
       <body>
         <SkipNav />
         <Header />
+        {/* Use page-level <div className="container"> when you want constrained width */}
         <main id="main-content">{children}</main>
         <Footer />
       </body>

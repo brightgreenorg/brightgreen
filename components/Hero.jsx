@@ -8,7 +8,7 @@ export default function Hero() {
       className="hero rounded shadow"
       style={{ position: 'relative', minHeight: 'clamp(420px, 72vh, 760px)', overflow: 'hidden' }}
     >
-      {/* Covered background image via Next Image */}
+      {/* Critical: fill + objectFit cover (NO width/height props) */}
       <Image
         src="/images/hero-desktop.jpg"
         alt="Bright, optimistic Oregon scene"
@@ -18,7 +18,7 @@ export default function Hero() {
         style={{ objectFit: 'cover', objectPosition: 'center 35%' }}
       />
 
-      {/* Optional brand overlay for legibility */}
+      {/* Brand overlay */}
       <div
         aria-hidden="true"
         style={{
@@ -29,7 +29,6 @@ export default function Hero() {
         }}
       />
 
-      {/* Content */}
       <div className="container hero__inner" style={{ position: 'relative', zIndex: 1 }}>
         <div className="hero__copy flow-2" style={{ maxWidth: '60ch' }}>
           <h1>Bright Green for a livable future</h1>

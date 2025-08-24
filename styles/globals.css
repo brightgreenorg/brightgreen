@@ -147,6 +147,16 @@
   .hero__copy { max-width: 60ch; }
   .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; }
 
+  /* 🔒 Safety net: force any Next <Image> inside .hero to cover the area */
+  .hero [data-nimg]{
+    position: absolute !important;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 35% !important;
+  }
+
   @media (min-width: 768px) {
     .hero { min-height: clamp(520px, 70vh, 800px); }
     .hero__inner { padding-block: var(--s-20); }

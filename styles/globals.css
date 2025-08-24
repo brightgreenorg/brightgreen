@@ -147,7 +147,7 @@
   .hero__copy { max-width: 60ch; }
   .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; }
 
-  /* 🔒 Safety net #1: force any Next <Image> inside .hero to cover the area */
+  /* 🔒 Safety net #1: any Next <Image> inside .hero must cover */
   .hero [data-nimg]{
     position: absolute !important;
     inset: 0;
@@ -157,16 +157,17 @@
     object-position: center 35% !important;
   }
 
-  /* 🔒 Safety net #2: handle the structure shown in Firefox (img inside .rounded.shadow) */
-  .hero .rounded.shadow {
+  /* 🔒 Safety net #2: the right-column card shown in Inspector
+     (breadcrumb: section.container > div.grid > div.rounded.shadow > img)  */
+  section.container > .grid > .rounded.shadow {
     position: relative;
-    height: 100%;
-    min-height: inherit;
+    min-height: clamp(240px, 40vh, 520px);
     overflow: hidden;
+    background: #000; /* pleasant load color under the image */
   }
-  .hero .rounded.shadow > img,
-  .hero .rounded.shadow > span > img,
-  .hero .rounded.shadow [data-nimg] {
+  section.container > .grid > .rounded.shadow > img,
+  section.container > .grid > .rounded.shadow > span > img,
+  section.container > .grid > .rounded.shadow [data-nimg] {
     position: absolute !important;
     inset: 0;
     width: 100% !important;

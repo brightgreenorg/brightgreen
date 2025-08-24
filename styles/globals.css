@@ -1,4 +1,4 @@
-/* styles/globals.css */
+/* REPLACE FILE: styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -125,11 +125,11 @@
   .prose code { background:#fff; border:1px solid var(--border); padding: 2px 6px; border-radius: 6px; }
   .prose pre { background:#111; color:#f2f2f2; padding:14px; border-radius:12px; border:1px solid #222; overflow:auto; }
 
-  /* ---- HERO layout for Next <Image fill> (no background images here) ---- */
+  /* ---- HERO layout for Next <Image fill> ---- */
   .hero {
     position: relative;
     overflow: hidden;
-    min-height: clamp(420px, 72vh, 760px);
+    min-height: clamp(420px, 72vh, 800px);
     display: grid;
     align-items: stretch;
     isolation: isolate;
@@ -137,15 +137,49 @@
     box-shadow: var(--shadow);
   }
 
+  /* Full‑bleed variant: removes rounding/shadow so image touches edges */
+  .hero--full {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
   .hero__inner {
     display: grid;
     align-items: center;
     min-height: inherit;
-    padding-block: var(--s-16);
+    padding-top: clamp(16px, 4vh, 80px);
+    padding-bottom: clamp(32px, 8vh, 160px);
+  }
+
+  /* Split rows: copy up top, spacer grows, CTAs sit low */
+  .hero__inner--split {
+    grid-template-rows: auto 1fr auto;
   }
 
   .hero__copy { max-width: 60ch; }
   .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  @media (min-width: 768px) { .hero__cta { flex-wrap: nowrap; } }
+
+  /* Bottom-only fade to improve legibility without dulling the image */
+  .hero__fade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0,0,0,0.54) 0%,
+      rgba(0,0,0,0.38) 20%,
+      rgba(0,0,0,0.00) 55%
+    );
+    pointer-events: none;
+  }
+
+  /* Light-on-photo treatment for hero text + subtle shadows */
+  .hero--on-photo h1,
+  .hero--on-photo p,
+  .hero--on-photo .muted { color: #fff; }
+  .hero--on-photo h1 { text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
+  .hero--on-photo p  { text-shadow: 0 1px 10px rgba(0,0,0,0.35); }
+  .hero--on-photo .btn { text-shadow: 0 1px 6px rgba(0,0,0,0.25); }
 
   /* Safety net #1: any Next <Image> inside .hero must cover */
   .hero [data-nimg]{
@@ -157,12 +191,12 @@
     object-position: center 35% !important;
   }
 
-  /* ✅ Scoped safety net for the hero's image container ONLY */
+  /* Scoped safety net for the hero's image container ONLY */
   .hero-art {
     position: relative;
     min-height: clamp(240px, 40vh, 520px);
     overflow: hidden;
-    background: #000; /* pleasant load color under the image */
+    background: #000;
   }
   .hero-art > img,
   .hero-art > span > img,
@@ -178,8 +212,8 @@
   }
 
   @media (min-width: 768px) {
-    .hero { min-height: clamp(520px, 70vh, 800px); }
-    .hero__inner { padding-block: var(--s-20); }
+    .hero { min-height: clamp(520px, 70vh, 820px); }
+    .hero__inner { padding-top: clamp(16px, 4vh, 80px); padding-bottom: clamp(32px, 8vh, 160px); }
   }
 }
 

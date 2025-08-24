@@ -1,14 +1,14 @@
-// components/Hero.jsx
+// REPLACE FILE: components/Hero.jsx
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Hero() {
   return (
     <section
-      className="hero rounded shadow"
-      style={{ position: 'relative', minHeight: 'clamp(420px, 72vh, 760px)', overflow: 'hidden' }}
+      className="hero hero--full hero--on-photo"
+      style={{ position: 'relative', minHeight: 'clamp(420px, 72vh, 800px)', overflow: 'hidden' }}
     >
-      {/* Critical: fill + objectFit cover (NO width/height props) */}
+      {/* Full-bleed image */}
       <Image
         src="/images/hero-desktop.jpg"
         alt="Bright, optimistic Oregon scene"
@@ -18,27 +18,23 @@ export default function Hero() {
         style={{ objectFit: 'cover', objectPosition: 'center 35%' }}
       />
 
-      {/* Brand overlay */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(180deg, rgba(126,217,87,.28), rgba(244,208,63,.24))',
-          pointerEvents: 'none'
-        }}
-      />
+      {/* Bottom-only fade to preserve image vibrancy while boosting readability */}
+      <div className="hero__fade" aria-hidden="true" />
 
-      <div className="container hero__inner" style={{ position: 'relative', zIndex: 1 }}>
+      {/* Split layout: headline/lede up top, CTAs anchored lower */}
+      <div className="container hero__inner hero__inner--split" style={{ position: 'relative', zIndex: 1 }}>
         <div className="hero__copy flow-2" style={{ maxWidth: '60ch' }}>
           <h1>Bright Green for a livable future</h1>
           <p className="muted">
             Energy, optimism, and action. Join us to accelerate practical climate solutions and fair elections.
           </p>
-          <div className="hero__cta" style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link href="/donate" className="btn btn--primary">Donate</Link>
-            <Link href="/volunteer" className="btn btn--secondary">Volunteer</Link>
-          </div>
+        </div>
+
+        <div className="hero__spacer" aria-hidden="true" />
+
+        <div className="hero__cta" style={{ display: 'flex', gap: 12 }}>
+          <Link href="/donate" className="btn btn--primary">Donate</Link>
+          <Link href="/volunteer" className="btn btn--secondary">Volunteer</Link>
         </div>
       </div>
     </section>

@@ -1,4 +1,4 @@
-// app/layout.jsx
+// REPLACE FILE: app/layout.jsx
 import '../styles/globals.css';
 import { League_Spartan, Roboto } from 'next/font/google';
 import Header from '../components/Header';
@@ -41,7 +41,8 @@ export default function RootLayout({ children }) {
       <body>
         <SkipNav />
         <Header />
-        <main id="content">{children}</main>
+        {/* Align with SkipNav target */}
+        <main id="main-content">{children}</main>
         <Footer />
       </body>
     </html>

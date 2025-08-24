@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Bright Green — A people‑powered PAC",
+  title: "Bright Green — A people-powered PAC",
   description: "Energy, optimism, and clarity. Join Bright Green to support innovation, fairness, and sustainability.",
 };
 
@@ -26,13 +26,15 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="rounded shadow" style={{ overflow: "hidden" }}>
+          {/* Hero art container (scoped) */}
+          <div className="rounded shadow hero-art">
             <Image
               src="/images/hero-desktop.avif"
               alt="Bright, optimistic Oregon scene"
-              width={1280}
-              height={720}
               priority
+              fill
+              sizes="(min-width: 1024px) 33vw, 50vw"
+              style={{ objectFit: "cover", objectPosition: "center 35%" }}
             />
           </div>
         </div>

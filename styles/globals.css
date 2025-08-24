@@ -147,7 +147,7 @@
   .hero__copy { max-width: 60ch; }
   .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; }
 
-  /* 🔒 Safety net #1: any Next <Image> inside .hero must cover */
+  /* Safety net #1: any Next <Image> inside .hero must cover */
   .hero [data-nimg]{
     position: absolute !important;
     inset: 0;
@@ -157,17 +157,16 @@
     object-position: center 35% !important;
   }
 
-  /* 🔒 Safety net #2: the right-column card shown in Inspector
-     (breadcrumb: section.container > div.grid > div.rounded.shadow > img)  */
-  section.container > .grid > .rounded.shadow {
+  /* ✅ Scoped safety net for the hero's image container ONLY */
+  .hero-art {
     position: relative;
     min-height: clamp(240px, 40vh, 520px);
     overflow: hidden;
     background: #000; /* pleasant load color under the image */
   }
-  section.container > .grid > .rounded.shadow > img,
-  section.container > .grid > .rounded.shadow > span > img,
-  section.container > .grid > .rounded.shadow [data-nimg] {
+  .hero-art > img,
+  .hero-art > span > img,
+  .hero-art [data-nimg] {
     position: absolute !important;
     inset: 0;
     width: 100% !important;

@@ -1,7 +1,14 @@
 ---
 title: Innovation & Technology for Good
+slug: innovation-and-technology
+summary: Use technology responsibly to solve problems and expand opportunity.
 description: Use technology responsibly to solve problems and expand opportunity.
 date: 2025-08-23
+published: true
+tags:
+  - technology
+  - innovation
+  - ai
 ---
 
 Technology is changing every aspect of our lives. Used wisely, it can expand opportunity, strengthen democracy, and help solve pressing challenges. Used poorly, it can deepen inequities or erode trust. Bright Green supports approaches that put people first, balancing innovation with fairness and accountability.

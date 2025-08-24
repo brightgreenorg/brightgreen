@@ -1,6 +1,7 @@
 // app/page.jsx
 import Image from "next/image";
 import Link from "next/link";
+import { getIssues } from "../lib/getIssues";
 
 export const metadata = {
   title: "Bright Green — A people-powered PAC",
@@ -8,7 +9,10 @@ export const metadata = {
     "Energy, optimism, and clarity. Join Bright Green to support innovation, fairness, and sustainability.",
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Pull latest issues from /content/issues (sorted by date in the helper)
+  const issues = await getIssues({ limit: 3 });
+
   return (
     <main>
       {/* Hero */}
@@ -34,9 +38,6 @@ export default function HomePage() {
               alt="Bright, optimistic Oregon scene"
               priority
               fill
-              /* Bigger responsive target so the browser selects a sharper source.
-                 On large desktops, request ~1400px (enough to cover tall hero height),
-                 otherwise scale down appropriately. */
               sizes="(min-width:1536px) 1400px, (min-width:1280px) 1320px, (min-width:1024px) 1200px, (min-width:768px) 90vw, 100vw"
               quality={90}
               style={{ objectFit: "cover", objectPosition: "center 35%" }}
@@ -45,24 +46,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Three-up CTA */}
+      {/* Issues pulled from Markdown (sorted by date) */}
       <section className="container" style={{ paddingBottom: 48 }}>
         <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px,1fr))" }}>
-          <Card title="Clean Energy" href="/issues/clean-energy" />
-          <Card title="Fair Elections" href="/issues/fair-elections" />
-          <Card title="Climate Resilience" href="/issues/climate-resilience" />
+          {issues.length > 0 ? (
+            issues.map((issue) => (
+              <article key={issue.slug} className="rounded shadow" style={{ border: "1px solid var(--border)", padding: 18 }}>
+                <h3 style={{ color: "var(--ink)" }}>{issue.title}</h3>
+                <p className="muted">{issue.summary}</p>
+                <Link className="btn btn--alt" href={`/issues/${issue.slug}`} style={{ marginTop: 12 }}>
+                  Learn more
+                </Link>
+              </article>
+            ))
+          ) : (
+            <p className="muted">
+              No issues found. Add markdown files to <code>/content/issues</code> with a
+              <code> date:</code> in the frontmatter (YYYY-MM-DD).
+            </p>
+          )}
         </div>
       </section>
     </main>
-  );
-}
-
-function Card({ title, href }) {
-  return (
-    <div className="rounded shadow" style={{ border: "1px solid var(--border)", padding: 18 }}>
-      <h3 style={{ color: "var(--ink)" }}>{title}</h3>
-      <p className="muted">What we back and why it matters.</p>
-      <a className="btn btn--alt" href={href} style={{ marginTop: 12 }}>Learn more</a>
-    </div>
   );
 }

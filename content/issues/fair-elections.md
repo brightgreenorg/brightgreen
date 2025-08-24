@@ -1,7 +1,15 @@
 ---
 title: Fair Elections
+slug: fair-elections
+summary: Protect voting access, trusted results, and clear information so every voice counts.
 description: Trusted rules, open participation, and clear information for every voter.
 date: 2025-08-23
+published: true
+tags:
+  - elections
+  - democracy
+  - voting
+  - transparency
 ---
 
 A healthy democracy needs fair rules and confident voters. Bright Green supports policies that make participation simple and secure, encourage issue-focused campaigns, and keep public trust at the center.

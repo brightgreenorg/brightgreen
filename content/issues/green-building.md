@@ -1,7 +1,13 @@
 ---
 title: Green Building
+slug: green-building
+summary: Smarter buildings that save energy, cut costs, and improve health.
 description: Smarter buildings that save energy, cut costs, and improve health.
 date: 2025-08-23
+published: true
+tags:
+  - buildings
+  - efficiency
 ---
 
 Buildings are where people spend most of their time, and they drive a huge share of energy use and emissions. Green building practices save money over the long term, improve comfort and health, and make communities more resilient.

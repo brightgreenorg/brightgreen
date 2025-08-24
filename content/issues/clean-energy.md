@@ -1,7 +1,15 @@
 ---
 title: Clean Energy
+slug: clean-energy
+summary: Practical, job-creating steps to accelerate a clean grid and clean transportation.
 description: Practical, job-creating steps to accelerate a clean grid and transportation.
 date: 2025-08-23
+published: true
+tags:
+  - energy
+  - grid
+  - transportation
+  - jobs
 ---
 
 Clean energy is a prosperity strategy. It lowers bills over time, creates local jobs, and cuts pollution that harms health. Bright Green supports policies that speed deployment of affordable renewables, energy storage, and efficiency—without leaving communities behind.

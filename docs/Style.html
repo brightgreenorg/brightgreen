@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Bright Green PAC — Visual Style Guide (Streamlined)</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700;800&amp;family=Roboto:wght@400;500;700&amp;family=Pacifico&amp;display=swap" rel="stylesheet"/>
+<style>:root{
+      --lime:#7ED957; --violet:#8E44AD; --yellow:#F4D03F; --black:#1C1C1C;
+      --bg:#FAFAF7; --ink:#1C1C1C; --muted:#6a665d; --border:#e8e6df;
+      --radius:18px; --radius-sm:12px; --shadow:0 10px 40px rgba(0,0,0,.08);
+      --focus-ring: 0 0 0 3px rgba(126,217,87,.55), 0 0 0 6px rgba(0,0,0,.06);
+      --gutter:22px;
+      --container-lg:1100px;
+      --bp-sm:480px; --bp-md:768px; --bp-lg:1024px; --bp-xl:1280px;
+      --s-0:0; --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px; --s-7:28px; --s-8:32px;
+      --s-10:40px; --s-12:48px; --s-16:64px; --s-20:80px; --s-24:96px; --s-28:112px; --s-32:128px;
+    }body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Roboto, system-ui, -apple-system, "Segoe UI", Arial, sans-serif}a{color:var(--violet)}header.top{position:sticky;top:0;z-index:40;background:var(--black);color:#fff;border-bottom:1px solid rgba(255,255,255,.06)}.nav{max-width:var(--container-lg);margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font:800 20px/1 "League Spartan";letter-spacing:.4px}.links{display:flex;gap:10px;flex-wrap:wrap}.links a{color:#fff;text-decoration:none;padding:8px 12px;border-radius:999px;font-weight:600;opacity:.95}.links a:hover{background:rgba(255,255,255,.10)}main{max-width:var(--container-lg);margin:0 auto;padding:28px}h1,h2,h3{font-family:"League Spartan",system-ui,sans-serif}h1{font-size:42px;line-height:1.1;margin:10px 0 6px}h2{font-size:28px;margin:26px 0 12px}h3{font-size:20px;margin:18px 0 8px;color:var(--muted)}.lead{color:var(--muted);margin-bottom:18px}.card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:22px}.bar{height:8px;background:linear-gradient(90deg,var(--lime),var(--yellow))}.content{padding:20px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}.tile{border:1px solid var(--border);border-radius:12px;padding:16px;background:#fff;text-align:center}code{background:#fff;border:1px solid var(--border);padding:2px 6px;border-radius:6px}pre{background:#111;color:#f2f2f2;padding:14px;border-radius:12px;overflow:auto;border:1px solid #222}/* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:999px;padding:12px 18px;cursor:pointer;
+         font:700 15px/1 "League Spartan";letter-spacing:.3px;transition:transform .05s ease, filter .15s ease, box-shadow .15s ease}.btn:active{transform:translateY(1px)}.btn:focus-visible{outline:none;box-shadow:var(--focus-ring)}.btn.primary{background:var(--violet);color:#fff}.btn.secondary{background:var(--lime);color:#111}.btn.alt{background:var(--yellow);color:#111}.btn.outline{background:#fff;color:#111;border:2px solid #111}.btn.ghost{background:transparent;color:var(--violet)}.btn:hover{filter:brightness(.96)}/* Forms (static visuals only) */
+    .field{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}.label{font:700 13px/1 "League Spartan";letter-spacing:.3px}.input,.select,.textarea{width:100%;border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;background:#fff;color:var(--ink);
+                             font:500 15px/1.4 Roboto,system-ui,sans-serif;transition:border-color .15s, box-shadow .15s}.input:focus,.select:focus,.textarea:focus{outline:none;border-color:var(--lime);box-shadow:0 0 0 4px rgba(126,217,87,.2)}.help{font-size:12px;color:var(--muted)}.input.error,.textarea.error{border-color:#A61B1B;box-shadow:0 0 0 4px rgba(166,27,27,.15)}/* Other UI */
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;font:700 12px/1 "League Spartan";border:1px solid var(--border)}.b-lime{background:var(--lime);color:#111}.alert{border-radius:12px;padding:12px 14px;border:1px solid var(--border);background:#fff}.alert.success{border-left:8px solid var(--lime)}.alert.info{border-left:8px solid var(--violet)}.alert.warn{border-left:8px solid var(--yellow)}.progress{height:12px;border-radius:999px;background:#ece9e0;overflow:hidden}.progress > span{display:block;height:100%;background:linear-gradient(90deg,var(--violet),var(--yellow));width:62%}.tabs{display:flex;gap:8px;background:#fff;border:1px solid var(--border);padding:6px;border-radius:999px;width:max-content}.tab{padding:8px 14px;border-radius:999px;font:700 13px/1 "League Spartan";cursor:default;color:#333}.tab.active{background:#111;color:#fff}/* Hero & Imagery overlays */
+    .hero{position:relative;border:1px solid var(--border);border-radius:var(--radius);padding:40px;box-shadow:var(--shadow);
+           color:#111;background:linear-gradient(180deg, rgba(126,217,87,.20), rgba(244,208,63,.20)), url('data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==') center/cover no-repeat}.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}.img-lime-yellow{background-image:linear-gradient(180deg, rgba(126,217,87,.40), rgba(244,208,63,.40)), url('data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');background-size:cover;background-position:center}.img-dark{background-image:linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.30)), url('data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');background-size:cover;background-position:center;color:#fff}.img-dark h3,.img-dark p{color:#fff}/* Brand assets */
+    .logo{display:flex;align-items:center;gap:10px}.wordmark{font:400 32px/1 "Pacifico", cursive}.dark-bg{background:#111;color:#fff}.photo-bg{background-image:linear-gradient(180deg, rgba(126,217,87,.35), rgba(244,208,63,.35)), url('data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');background-size:cover;background-position:center;color:#111}</style>
+</head>
+<body>
+<header class="top">
+<div class="nav">
+<div class="brand">Bright Green PAC</div>
+<nav aria-label="On-page" class="links">
+<a href="#overview">Overview</a>
+<a href="#colors">Colors</a>
+<a href="#type">Typography</a>
+<a href="#layout">Layout</a>
+<a href="#components">Components</a>
+<a href="#imagery">Imagery</a>
+<a href="#motion">Motion</a>
+<a href="#brand">Brand</a>
+<a href="#accessibility">A11y</a>
+</nav>
+</div>
+</header>
+<main>
+<section id="overview">
+<h1>Visual Style Guide (Streamlined)</h1>
+<p class="lead">Energy, optimism, and clarity for a people‑powered PAC. This guide focuses on palette, typography, layout, components, imagery, motion, accessibility, and brand assets — without demo content or live scripts.</p>
+<div aria-label="Hero sample with brand overlay" class="hero" role="img">
+<span class="badge b-lime">Uplift &amp; Energy</span>
+<h2 style="margin-top:10px">Take Action Today</h2>
+<p>Bold League Spartan headlines + readable Roboto body. Violet for primary CTAs; Lime for supportive actions.</p>
+<div class="cta">
+<button class="btn primary">Donate</button>
+<button class="btn secondary">Volunteer</button>
+<button class="btn outline">Our Platform</button>
+</div>
+</div>
+</section>
+<!-- COLORS -->
+<section class="card" id="colors" style="margin-top:22px">
+<div class="bar"></div>
+<div class="content">
+<h2>Color Palette — Uplift &amp; Energy</h2>
+<div class="grid">
+<div class="tile"><div style="height:70px;border-radius:12px;margin-bottom:10px;background:var(--lime)"></div>Lime Green<br/><code>#7ED957</code></div>
+<div class="tile"><div style="height:70px;border-radius:12px;margin-bottom:10px;background:var(--violet)"></div>Bright Violet<br/><code>#8E44AD</code></div>
+<div class="tile"><div style="height:70px;border-radius:12px;margin-bottom:10px;background:var(--yellow)"></div>Golden Yellow<br/><code>#F4D03F</code></div>
+<div class="tile"><div style="height:70px;border-radius:12px;margin-bottom:10px;background:var(--black)"></div>Black / Ink<br/><code>#1C1C1C</code></div>
+</div>
+<h3>Usage</h3>
+<p><strong>Primary:</strong> Lime for supportive CTAs, Violet for primary CTAs. <strong>Highlights:</strong> Yellow. <strong>Text:</strong> Black/Ink.</p>
+<p><strong>Accessible pairs:</strong> Lime/Black, Violet/White, Yellow/Black, Black/White.</p>
+<p><strong>Tokens:</strong> <code>--lime</code> <code>--violet</code> <code>--yellow</code> <code>--black</code> <code>--bg</code> <code>--border</code></p><h3>Flexibility &amp; Extended Palette</h3><p>Violet and Lime are preferred accents, with Yellow for highlights. Designers may introduce secondary/extended colors for campaigns, data visuals, or partner work—provided contrast remains accessible and new hues harmonize with the core palette.</p><ul><li>Neutrals (warm/cool grays) for formal or content‑heavy layouts.</li><li>Alternative greens/blues for climate or policy contexts.</li><li>Seasonal or campaign‑specific accents with documented usage.</li></ul>
+</div>
+</section>
+<!-- TYPE -->
+<section class="card" id="type">
+<div class="bar"></div>
+<div class="content">
+<h2>Typography</h2>
+<h1 style="margin:0">League Spartan H1</h1>
+<p style="font-family:Roboto;font-size:16px">Roboto body text: 16–18px with 1.55–1.6 line height. Reserve ALL CAPS for short CTAs; use sentence case for longer headings.</p>
+<div style="margin-top:10px">
+<code>h1–h3 { font-family: "League Spartan", sans-serif; }</code>  
+          <code>body { font-family: "Roboto", sans-serif; }</code>
+</div>
+<h3>Typographic Flexibility</h3><p>Headlines: League Spartan is the default. Campaigns may use a compatible bold sans‑serif or display face when it improves clarity or tone; keep readability and brand harmony.</p><p>Body: Roboto is the default. Long‑form or editorial content may optionally use a highly readable serif paired with League Spartan, maintaining 1.5–1.7 line height and clear hierarchy.</p></div>
+</section>
+<!-- LAYOUT -->
+<section class="card" id="layout">
+<div class="bar"></div>
+<div class="content">
+<h2>Layout System</h2>
+<p>12‑column grid with a consistent spacing scale and tuned container widths. Values shown are defaults; scale up/down for large‑format or compact UIs while preserving rhythm.</p>
+<pre><code>/* Containers &amp; gutters */
+.container { max-width: 1100px; padding: 0 24px; margin: 0 auto; }
+.grid { display: grid; gap: 22px; }
+/* Breakpoints: sm 480px, md 768px, lg 1024px, xl 1280px */
+</code></pre>
+<div class="grid">
+<div class="tile">Containers: 640 / 840 / 1100 / 1240px</div>
+<div class="tile">Gutters: 22px</div>
+<div class="tile">Spacing: 4 → 128px scale</div>
+</div>
+<pre><code>/* Defaults (scalable): gutters 22px; containers 640–1240px
+   Designers may widen containers for media‑rich pages or tighten for tools/dashboards. */</code></pre></div>
+</section>
+<!-- COMPONENTS -->
+<section class="card" id="components">
+<div class="bar"></div>
+<div class="content">
+<h2>Core Components</h2>
+<h3>Buttons</h3>
+<div class="grid">
+<div class="tile"><button class="btn primary">Primary</button></div>
+<div class="tile"><button class="btn alt">Primary / Alt</button></div>
+<div class="tile"><button class="btn secondary">Secondary</button></div>
+<div class="tile"><button class="btn outline">Outline</button></div>
+<div class="tile"><button class="btn ghost">Ghost</button></div>
+<div class="tile"><button class="btn" disabled="">Disabled</button></div>
+</div>
+<h3>Forms</h3>
+<div class="grid">
+<div class="tile" style="text-align:left">
+<div class="field">
+<label class="label" for="ex-name">Full Name</label>
+<input class="input" id="ex-name" placeholder="Alex Example"/>
+<div class="help">Use your legal name for compliance.</div>
+</div>
+<div class="field">
+<label class="label" for="ex-email">Email</label>
+<input class="input" id="ex-email" placeholder="you@example.org" type="email"/>
+</div>
+<div class="field">
+<label class="label" for="ex-amount">Amount</label>
+<select class="select" id="ex-amount"><option>$10</option><option>$25</option><option>$50</option><option>$100</option></select>
+</div>
+<div class="field">
+<label class="label" for="ex-message">Message</label>
+<textarea class="textarea" id="ex-message" placeholder="Say hello…" rows="3"></textarea>
+</div>
+</div>
+<div class="tile" style="text-align:left">
+<div class="alert success"><strong>Success:</strong> Your pledge was recorded.</div>
+<div class="alert info" style="margin-top:10px"><strong>Info:</strong> Matching funds available.</div>
+<div class="alert warn" style="margin-top:10px"><strong>Heads up:</strong> Contribution limits may apply.</div>
+<div style="margin-top:12px">
+<div class="progress"><span></span></div>
+</div>
+<div aria-label="Sections" class="tabs" role="tablist" style="margin-top:12px">
+<div aria-selected="true" class="tab active" role="tab">Overview</div>
+<div aria-selected="false" class="tab" role="tab">Issues</div>
+<div aria-selected="false" class="tab" role="tab">Events</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- IMAGERY -->
+<section class="card" id="imagery">
+<div class="bar"></div>
+<div class="content">
+<h2>Imagery &amp; Iconography</h2>
+<p>Prefer authentic photography with natural light. Oregon backdrops are great for local identity, but abstract, illustrative, or national‑scope imagery is encouraged when it better tells the story. Use overlays to ensure warmth and legibility.</p>
+<div class="grid">
+<div class="tile" style="padding:0">
+<div class="img-lime-yellow" style="min-height:200px;border-top-left-radius:12px;border-top-right-radius:12px"></div>
+<div style="padding:12px">Overlay: Lime→Yellow (40%)</div>
+</div>
+<div class="tile" style="padding:0">
+<div class="img-dark" style="min-height:200px;border-top-left-radius:12px;border-top-right-radius:12px"></div>
+<div style="padding:12px">Overlay: Dark (30%) for white text</div>
+</div>
+</div>
+<ul><li>Abstract/illustrative graphics for policy explainers and data.</li><li>National scenes or subjects for broader campaigns.</li><li>Texture/shape systems as subtle brand carriers when photos aren’t available.</li></ul></div>
+</section>
+<!-- MOTION -->
+<section class="card" id="motion">
+<div class="bar"></div>
+<div class="content">
+<h2>Motion &amp; Interaction</h2>
+<ul>
+<li>Transitions 150–250ms, <code>ease-in-out</code></li>
+<li>Hover: slight brightness shift; Active: <code>translateY(1px)</code></li>
+<li>Cards: subtle lift on hover</li>
+<li>Focus: lime ring for keyboard visibility</li>
+</ul>
+<pre><code>.btn{transition:transform .05s ease, filter .15s ease}
+.btn:active{transform:translateY(1px)}</code></pre>
+<p>Transitions (150–250ms) and hover/active treatments are defaults. Additional subtle patterns (e.g., fades, slides, emphasis reveals) may be used for storytelling, provided they remain restrained and respect prefers‑reduced‑motion.</p></div>
+</section>
+<!-- BRAND -->
+<section class="card" id="brand">
+<div class="bar"></div>
+<div class="content">
+<h2>Brand Assets</h2>
+<div class="grid">
+<div class="tile">
+<div class="logo" style="color:#111">
+<svg aria-label="Sunrise icon" class="sun" height="44" viewbox="0 0 64 64" width="44">
+<defs><lineargradient id="grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0%" stop-color="#7ED957"></stop><stop offset="100%" stop-color="#8E44AD"></stop></lineargradient></defs>
+<circle cx="32" cy="36" fill="url(#grad)" r="14"></circle>
+<g stroke="url(#grad)" stroke-linecap="round" stroke-width="3">
+<line x1="32" x2="32" y1="6" y2="16"></line>
+<line x1="12" x2="20" y1="14" y2="22"></line>
+<line x1="52" x2="44" y1="14" y2="22"></line>
+<line x1="6" x2="16" y1="36" y2="36"></line>
+<line x1="48" x2="58" y1="36" y2="36"></line>
+</g>
+<rect fill="url(#grad)" height="4" rx="2" width="56" x="4" y="44"></rect>
+</svg>
+<div class="wordmark">Bright Green</div>
+</div>
+<div style="margin-top:8px;font-size:12px;color:#666">Full Color</div>
+</div>
+<div class="tile dark-bg">
+<div class="logo" style="color:#fff">
+<svg aria-hidden="true" class="sun" height="44" viewbox="0 0 64 64" width="44">
+<circle cx="32" cy="36" fill="#fff" r="14"></circle>
+<g stroke="#fff" stroke-linecap="round" stroke-width="3">
+<line x1="32" x2="32" y1="6" y2="16"></line>
+<line x1="12" x2="20" y1="14" y2="22"></line>
+<line x1="52" x2="44" y1="14" y2="22"></line>
+<line x1="6" x2="16" y1="36" y2="36"></line>
+<line x1="48" x2="58" y1="36" y2="36"></line>
+</g>
+<rect fill="#fff" height="4" rx="2" width="56" x="4" y="44"></rect>
+</svg>
+<div class="wordmark">Bright Green</div>
+</div>
+<div style="margin-top:8px;font-size:12px;opacity:.85">Reversed (White)</div>
+</div>
+<div class="tile photo-bg">
+<div class="logo" style="color:#111">
+<svg aria-hidden="true" class="sun" height="44" viewbox="0 0 64 64" width="44">
+<circle cx="32" cy="36" fill="#F4D03F" r="14"></circle>
+<g stroke="#7ED957" stroke-linecap="round" stroke-width="3">
+<line x1="32" x2="32" y1="6" y2="16"></line>
+<line x1="12" x2="20" y1="14" y2="22"></line>
+<line x1="52" x2="44" y1="14" y2="22"></line>
+<line x1="6" x2="16" y1="36" y2="36"></line>
+<line x1="48" x2="58" y1="36" y2="36"></line>
+</g>
+<rect fill="#7ED957" height="4" rx="2" width="56" x="4" y="44"></rect>
+</svg>
+<div class="wordmark">Bright Green</div>
+</div>
+<div style="margin-top:8px;font-size:12px;color:#666">Photo Background</div>
+</div>
+<div class="tile">
+<div class="logo" style="color:#111">
+<svg aria-hidden="true" class="sun" height="44" viewbox="0 0 64 64" width="44">
+<circle cx="32" cy="36" fill="#111" r="14"></circle>
+<g stroke="#111" stroke-linecap="round" stroke-width="3">
+<line x1="32" x2="32" y1="6" y2="16"></line>
+<line x1="12" x2="20" y1="14" y2="22"></line>
+<line x1="52" x2="44" y1="14" y2="22"></line>
+<line x1="6" x2="16" y1="36" y2="36"></line>
+<line x1="48" x2="58" y1="36" y2="36"></line>
+</g>
+<rect fill="#111" height="4" rx="2" width="56" x="4" y="44"></rect>
+</svg>
+<div class="wordmark">Bright Green</div>
+</div>
+<div style="margin-top:8px;font-size:12px;color:#666">Monochrome</div>
+</div>
+</div>
+<p style="font-size:12px;color:#666;margin-top:10px">Export favicons as <code>.ico</code> and <code>.png</code> (16, 32, 48, 64). Social icon uses a circular crop.</p>
+</div>
+</section>
+<!-- ACCESSIBILITY -->
+<section class="card" id="accessibility">
+<div class="bar"></div>
+<div class="content">
+<h2>Accessibility &amp; Content</h2>
+<div class="note" style="background:#fff;border:1px solid var(--border);border-left:8px solid var(--lime);border-radius:var(--radius);padding:18px 20px;margin-bottom:20px">
+<ul>
+<li>Maintain contrast: use provided pairs (Lime/Black, Violet/White, Yellow/Black, Black/White).</li>
+<li>Focus states visible: lime ring on interactive elements.</li>
+<li>Minimum tap target: 44×44px; generous spacing from the scale.</li>
+<li>Motion: respect <code>prefers-reduced-motion</code>. Avoid flashy transitions.</li>
+<li>Headings are descriptive; links use meaningful text.</li>
+</ul>
+</div>
+<h3>Copy Guidelines</h3>
+<ul>
+<li>Tone: optimistic, action‑oriented, inclusive.</li>
+<li>CTAs: short, action‑oriented verbs (e.g., Donate, Volunteer, Join, Share, Sign Up, Pledge, Learn More). Match the campaign context while staying direct.</li>
+<li>Use sentence case for longer headings; reserve ALL CAPS for short labels.</li>
+</ul>
+</div>
+</section>
+</main>
+</body>
+</html>

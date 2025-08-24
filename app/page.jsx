@@ -4,7 +4,8 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Bright Green — A people-powered PAC",
-  description: "Energy, optimism, and clarity. Join Bright Green to support innovation, fairness, and sustainability.",
+  description:
+    "Energy, optimism, and clarity. Join Bright Green to support innovation, fairness, and sustainability.",
 };
 
 export default function HomePage() {
@@ -33,7 +34,11 @@ export default function HomePage() {
               alt="Bright, optimistic Oregon scene"
               priority
               fill
-              sizes="(min-width: 1024px) 33vw, 50vw"
+              /* Bigger responsive target so the browser selects a sharper source.
+                 On large desktops, request ~1400px (enough to cover tall hero height),
+                 otherwise scale down appropriately. */
+              sizes="(min-width:1536px) 1400px, (min-width:1280px) 1320px, (min-width:1024px) 1200px, (min-width:768px) 90vw, 100vw"
+              quality={90}
               style={{ objectFit: "cover", objectPosition: "center 35%" }}
             />
           </div>

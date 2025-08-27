@@ -1,7 +1,7 @@
-// app/page.jsx
+// REPLACE FILE: app/page.jsx
 import Image from "next/image";
 import Link from "next/link";
-import { getIssues } from "../lib/getIssues";
+import { getIssues } from "../lib/getissues";
 import Hero from "../components/Hero";
 
 export const metadata = {
@@ -16,7 +16,7 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Full‑bleed hero with above‑the‑fold CTAs */}
+      {/* Full-bleed hero with above-the-fold CTAs */}
       <Hero />
 
       {/* Main content (target for SkipNav) */}
@@ -44,7 +44,7 @@ export default async function HomePage() {
                 vote by vote.
               </p>
 
-              {/* Optional mini‑pillars */}
+              {/* Optional mini-pillars */}
               <ul className="muted" style={{ marginTop: "var(--s-4)", paddingLeft: "1.25rem" }}>
                 <li>
                   <strong>Innovation</strong> — practical tech that serves people

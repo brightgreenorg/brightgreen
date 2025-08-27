@@ -1,3 +1,5 @@
+--- 
+REPLACE FILE: content/pages/press-kit.md
 ---
 title: Press Kit
 description: Logos, boilerplate, and contact info for media coverage of Bright Green PAC.
@@ -19,9 +21,9 @@ Our campaigns emphasize practical clean energy, fair elections, and resilient co
 ## Logo Files
 Logos are available in multiple formats:
 
-- **Full Color:** `/public/images/brand/bright-green-fullcolor.svg`  
-- **Reversed (White):** `/public/images/brand/bright-green-white.svg`  
-- **Monochrome:** `/public/images/brand/bright-green-mono.svg`
+- **Full Color:** `/images/brand/bright-green-fullcolor.svg`  
+- **Reversed (White):** `/images/brand/bright-green-white.svg`  
+- **Monochrome:** `/images/brand/bright-green-mono.svg`
 
 Use sufficient clear space around the logo. Do not alter colors or proportions.
 
@@ -36,7 +38,7 @@ Bright Green PAC is an Oregon political action committee organized to support su
 For press inquiries:  
 **Glen Phillips, President**  
 📧 [brightgreenpac@gmail.com](mailto:brightgreenpac@gmail.com)  
-📍 Portland, Oregon USA  
+📍 Portland Oregon USA  
 
 🏠 Mailing Address:  
 Bright Green PAC  

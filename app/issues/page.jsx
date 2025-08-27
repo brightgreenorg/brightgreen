@@ -1,6 +1,6 @@
-// app/issues/page.jsx
+// REPLACE FILE: app/issues/page.jsx
 import Link from 'next/link';
-import { listIssuesMeta as getIssues } from '@/lib/mdx';
+import { listIssuesMeta as getIssues } from '../../lib/mdx';
 
 export const metadata = { title: 'Issues' };
 

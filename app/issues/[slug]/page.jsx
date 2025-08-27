@@ -1,6 +1,6 @@
-// app/issues/[slug]/page.jsx
+// REPLACE FILE: app/issues/[slug]/page.jsx
 import { notFound } from 'next/navigation';
-import { getIssueBySlug, listIssueSlugs } from '@/lib/mdx';
+import { getIssueBySlug, listIssueSlugs } from '../../../lib/mdx';
 
 export async function generateStaticParams() {
   const slugs = await listIssueSlugs(); // only build pages that actually exist on disk

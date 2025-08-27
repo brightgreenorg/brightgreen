@@ -1,5 +1,4 @@
---- 
-REPLACE FILE: content/pages/press-kit.md
+<!-- REPLACE FILE: content/pages/press-kit.md -->
 ---
 title: Press Kit
 description: Logos, boilerplate, and contact info for media coverage of Bright Green PAC.

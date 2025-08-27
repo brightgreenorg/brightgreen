@@ -3,22 +3,24 @@ module.exports = {
   content: [
     "./app/**/*.{js,jsx,ts,tsx,mdx}",
     "./components/**/*.{js,jsx,ts,tsx,mdx}",
-    "./content/**/*.{md,mdx}"
+    "./content/**/*.{md,mdx}",
   ],
   theme: {
-    extend: {
-      colors: {
-        lime: "#7ED957",
-        violet: "#8E44AD",
-        yellow: "#F4D03F",
-        ink: "#1C1C1C",
-        bg: "#FAFAF7",
-        muted: "#6a665d",
-        border: "#e8e6df"
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: "1rem",
+        sm: "1.25rem",
+        lg: "2rem",
+        xl: "2.5rem",
+        "2xl": "3rem",
       },
-      borderRadius: { lg: "18px", md: "12px" },
-      boxShadow: { brand: "0 10px 40px rgba(0,0,0,.08)" }
-    }
+      screens: { "2xl": "1200px" },
+    },
+    extend: {
+      borderRadius: { xl: "16px", "2xl": "24px" },
+      boxShadow: { card: "0 6px 24px rgba(0,0,0,0.06)" },
+    },
   },
-  plugins: []
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
 };

@@ -1,7 +1,7 @@
 // REPLACE FILE: app/page.jsx
 import Link from "next/link";
 import Hero from "../components/Hero";
-import ArtBlock from "../components/artblock";
+import ArtBlock from "../components/ArtBlock";
 import { getIssues } from "../lib/getissues";
 
 export const metadata = {

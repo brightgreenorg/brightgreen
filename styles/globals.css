@@ -1,4 +1,4 @@
-/* REPLACE FILE: */
+/* REPLACE FILE: styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -221,8 +221,13 @@
     display: grid;
     gap: var(--gutter);
     align-items: center;
-    grid-template-areas: "media" "copy"; /* mobile: image first, copy second */
+    grid-template-areas: "media" "copy"; /* default mobile: image first, copy second */
   }
+
+  /* NEW: mobile stacking overrides by side */
+  .artblock--side-right { grid-template-areas: "copy" "media"; } /* put right-side media below on mobile */
+  .artblock--side-left  { grid-template-areas: "media" "copy"; } /* keep left-side media above on mobile */
+
   .artblock__media { grid-area: media; }
   .artblock__content { grid-area: copy; }
   .artblock--card .artblock__media {

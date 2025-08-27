@@ -28,7 +28,6 @@ export default async function HomePage() {
           style={{ paddingTop: "var(--s-12)", paddingBottom: "var(--s-12)" }}
         >
           <ArtBlock
-            ratio="3/4"
             image={{
               src: "/images/art/fist.avif",
               alt: "Raised fist with leaf motif symbolizing collective climate action",

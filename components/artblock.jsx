@@ -8,7 +8,7 @@ function toAspectValue(ratio) {
   if (parts.length === 2 && parts.every((n) => !Number.isNaN(Number(n)))) {
     return `${Number(parts[0])} / ${Number(parts[1])}`;
   }
-  return "3 / 4"; // safe fallback
+  return "1 / 1"; // safe fallback now matches default
 }
 
 /**
@@ -18,7 +18,7 @@ function toAspectValue(ratio) {
  * - Image fills frame with object-fit: cover; focal point adjustable.
  *
  * Props:
- * - ratio?: '3/4' | '4/3' | '1/1' | '16/9' | 'auto' (default '3/4')
+ * - ratio?: '3/4' | '4/3' | '1/1' | '16/9' | 'auto' (default '1/1')
  * - image: { src: string; alt: string; priority?: boolean; focal?: string; sizes?: string; }
  * - imageSide?: 'left' | 'right' (default 'right' on md+; mobile always stacks image first)
  * - tone?: 'card' | 'bare' (default 'card')
@@ -28,7 +28,7 @@ function toAspectValue(ratio) {
  * - children: React.ReactNode (your copy)
  */
 export default function ArtBlock({
-  ratio = "3/4",
+  ratio = "1/1",
   image,
   imageSide = "right",
   tone = "card",

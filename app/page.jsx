@@ -1,8 +1,8 @@
 // REPLACE FILE: app/page.jsx
-import Image from "next/image";
 import Link from "next/link";
-import { getIssues } from "../lib/getissues";
 import Hero from "../components/Hero";
+import ArtBlock from "../components/artblock";
+import { getIssues } from "../lib/getissues";
 
 export const metadata = {
   title: "Bright Green — A people-powered PAC",
@@ -11,7 +11,6 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  // Pull latest issues from /content/issues (sorted by date in the helper)
   const issues = await getIssues({ limit: 3 });
 
   return (
@@ -28,24 +27,29 @@ export default async function HomePage() {
           className="container"
           style={{ paddingTop: "var(--s-12)", paddingBottom: "var(--s-12)" }}
         >
-          <div
-            className="grid"
-            style={{
-              alignItems: "center",
-              gridTemplateColumns: "1.1fr 0.9fr",
+          <ArtBlock
+            ratio="3/4"
+            image={{
+              src: "/images/art/fist.avif",
+              alt: "Raised fist with leaf motif symbolizing collective climate action",
+              focal: "center 35%",
+              priority: false,
+              sizes: "(min-width:1024px) 50vw, 92vw",
             }}
+            imageSide="right"
+            tone="card"
           >
-            {/* Copy */}
             <div className="flow-2" style={{ maxWidth: "60ch" }}>
               <h2 id="rise-heading">Together we Rise</h2>
               <p className="muted">
-                Bright Green PAC is powered by people who believe in innovation, fairness, and
-                sustainability. Together, we rise to build a livable, just future — block by block,
-                vote by vote.
+                Bright Green PAC is powered by people who believe in innovation,
+                fairness, and sustainability. Together, we rise to build a livable,
+                just future — block by block, vote by vote.
               </p>
-
-              {/* Optional mini-pillars */}
-              <ul className="muted" style={{ marginTop: "var(--s-4)", paddingLeft: "1.25rem" }}>
+              <ul
+                className="muted"
+                style={{ marginTop: "var(--s-4)", paddingLeft: "1.25rem" }}
+              >
                 <li>
                   <strong>Innovation</strong> — practical tech that serves people
                 </li>
@@ -57,27 +61,7 @@ export default async function HomePage() {
                 </li>
               </ul>
             </div>
-
-            {/* Image */}
-            <div
-              className="rounded shadow"
-              style={{
-                border: "1px solid var(--border)",
-                justifySelf: "stretch",
-                overflow: "hidden",
-              }}
-            >
-              <Image
-                src="/images/art/fist.avif"
-                alt="Raised fist with leaf motif symbolizing collective climate action"
-                width={960}
-                height={1200}
-                loading="lazy"
-                sizes="(min-width:1024px) 460px, (min-width:768px) 50vw, 92vw"
-                style={{ width: "100%", height: "auto", display: "block" }}
-              />
-            </div>
-          </div>
+          </ArtBlock>
         </section>
 
         {/* Issues pulled from Markdown (sorted by date) */}
@@ -91,7 +75,7 @@ export default async function HomePage() {
                 <article
                   key={issue.slug}
                   className="rounded shadow"
-                  style={{ border: "1px solid var(--border)", padding: 18 }}
+                  style={{ border: "1px solid var(--border)", padding: 18, background: "#fff" }}
                 >
                   <h3 style={{ color: "var(--ink)" }}>{issue.title}</h3>
                   <p className="muted">{issue.summary}</p>

@@ -1,4 +1,4 @@
-/* REPLACE FILE: styles/globals.css */
+/* REPLACE FILE: */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -137,7 +137,7 @@
     box-shadow: var(--shadow);
   }
 
-  /* Full‑bleed variant: removes rounding/shadow so image touches edges */
+  /* Full-bleed variant: removes rounding/shadow so image touches edges */
   .hero--full {
     border-radius: 0;
     box-shadow: none;
@@ -214,6 +214,58 @@
   @media (min-width: 768px) {
     .hero { min-height: clamp(520px, 70vh, 820px); }
     .hero__inner { padding-top: clamp(16px, 4vh, 80px); padding-bottom: clamp(32px, 8vh, 160px); }
+  }
+
+  /* ---- ArtBlock (image + copy) ---- */
+  .artblock {
+    display: grid;
+    gap: var(--gutter);
+    align-items: center;
+    grid-template-areas: "media" "copy"; /* mobile: image first, copy second */
+  }
+  .artblock__media { grid-area: media; }
+  .artblock__content { grid-area: copy; }
+  .artblock--card .artblock__media {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    background: #000;
+  }
+  .artblock__frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--ratio, 3 / 4);
+    overflow: hidden;
+    background: #000;
+  }
+  .artblock__frame > img,
+  .artblock__frame > span > img,
+  .artblock__frame [data-nimg] {
+    position: absolute !important;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: var(--focal, center center) !important;
+    display: block;
+    max-width: none;
+  }
+  .artblock__caption {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  @media (min-width: 768px) {
+    .artblock--side-right {
+      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-areas: "copy media";
+    }
+    .artblock--side-left {
+      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-areas: "media copy";
+    }
   }
 }
 

@@ -12,17 +12,17 @@ tags:
   - jobs
 ---
 
-Clean energy is a prosperity strategy. It lowers bills over time, creates local jobs, and cuts pollution that harms health. Bright Green supports policies that speed deployment of affordable renewables, energy storage, and efficiency—without leaving communities behind.
+Clean energy is a prosperity strategy.  It builds a base of long-term generation, lowers bills over time, creates local jobs, and cuts the pollution that harms health and dirties our sky.  Bright Green supports policy outcomes that speed the deployment of affordable renewables, drive innovation to make energy storage affordable, and confront the situation with clarity and optimism.
 
 ## What we support
 - Faster interconnection and permitting for solar, wind, and storage
-- Grid upgrades and demand-side programs that reduce peak costs
-- Clean transportation: charging networks, e-buses, and e-bikes
-- Weatherization and heat-pump incentives that help households and small businesses
-- [Add local/state-specific example here]
+- Modern grid upgrades and smart demand-side programs that cut peak costs
+- Clean transportation: charging networks and next-generation transit solutions
+- Household and small-business savings through weatherization and heat-pump incentives
+- Opportunity grants for local innovators and community solutions
 
 ## Why it matters
-Households feel energy costs every month. Spending smarter on efficiency and modern infrastructure reduces those costs while building good jobs. Every dollar we waste on outdated systems is a dollar that could strengthen communities.
+The energy choices we make shape daily life and the future of our economy.  Smarter spending on efficiency and modern infrastructure cuts costs, creates good jobs, and strengthens communities.  Investing in modern energy is how we spark innovation, build resilience, and preserve our health, our environment, and our shared future.
 
 ## Our approach
-We back candidates and measures that make clean energy practical: clear timelines, transparent budgets, accountability for results, and community benefits. Clean energy should be reliable, fair, and built to last. We will highlight leaders who bring measurable progress—so voters can see and feel the difference.
+We advance policies and initiatives that make clean energy practical - with clear timelines, transparent budgets, accountability for results, and real community benefits.  Clean energy must endure, protect what we value, and open doors to the future.  Bright Green elevates what works, so clean energy isn’t just a vision but a lived reality.

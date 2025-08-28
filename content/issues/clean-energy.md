@@ -3,7 +3,7 @@ title: Clean Energy
 slug: clean-energy
 summary: Practical, job-creating steps to accelerate a clean grid and clean transportation.
 description: Practical, job-creating steps to accelerate a clean grid and transportation.
-date: 2025-08-23
+date: 2025-08-27
 published: true
 tags:
   - energy

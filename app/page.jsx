@@ -1,4 +1,4 @@
-// REPLACE FILE: app/page.jsx
+// app/page.jsx
 import Link from "next/link";
 import Hero from "../components/Hero";
 import ArtBlock from "../components/ArtBlock";
@@ -63,36 +63,54 @@ export default async function HomePage() {
           </ArtBlock>
         </section>
 
-        {/* Issues pulled from Markdown (sorted by date) */}
-        <section className="container" style={{ paddingBlock: 48 }}>
-          <div
-            className="grid"
-            style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px,1fr))" }}
-          >
-            {issues.length > 0 ? (
-              issues.map((issue) => (
-                <article
-                  key={issue.slug}
-                  className="rounded shadow"
-                  style={{ border: "1px solid var(--border)", padding: 18, background: "#fff" }}
-                >
-                  <h3 style={{ color: "var(--ink)" }}>{issue.title}</h3>
-                  <p className="muted">{issue.summary}</p>
-                  <Link
-                    className="btn btn--alt"
-                    href={`/issues/${issue.slug}`}
-                    style={{ marginTop: 12 }}
+        {/* Latest Issues (sorted by date) */}
+        <section
+          aria-labelledby="issues-heading"
+          className="container"
+          style={{ paddingBlock: "var(--s-12)" }}
+        >
+          <div className="flow-2">
+            <h2 id="issues-heading">Latest issues</h2>
+
+            <div
+              className="grid"
+              style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px,1fr))" }}
+            >
+              {issues.length > 0 ? (
+                issues.map((issue) => (
+                  <article
+                    key={issue.slug}
+                    className="rounded shadow"
+                    style={{
+                      border: "1px solid var(--border)",
+                      padding: 18,
+                      background: "#fff",
+                    }}
                   >
-                    Learn more
-                  </Link>
-                </article>
-              ))
-            ) : (
-              <p className="muted">
-                No issues found. Add markdown files to <code>/content/issues</code> with a
-                <code> date:</code> in the frontmatter (YYYY-MM-DD).
-              </p>
-            )}
+                    <h3 style={{ color: "var(--ink)" }}>{issue.title}</h3>
+                    <p className="muted">{issue.summary}</p>
+                    <Link
+                      className="btn btn--alt"
+                      href={`/issues/${issue.slug}`}
+                      style={{ marginTop: 12 }}
+                    >
+                      Learn more
+                    </Link>
+                  </article>
+                ))
+              ) : (
+                <p className="muted">
+                  No issues found. Add markdown files to <code>/content/issues</code> with a
+                  <code> date:</code> in the frontmatter (YYYY-MM-DD).
+                </p>
+              )}
+            </div>
+
+            <div>
+              <Link href="/issues" className="btn btn--outline" aria-label="View all issues">
+                View all issues
+              </Link>
+            </div>
           </div>
         </section>
       </main>

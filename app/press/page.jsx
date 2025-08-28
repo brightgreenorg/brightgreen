@@ -1,35 +1,89 @@
 // app/press/page.jsx
+import Link from "next/link";
+import Prose from "../../components/Prose";
+
 export const metadata = {
-  title: "Press",
-  description: "Boilerplate, logo files, and contact for media inquiries.",
+  title: "Press — Bright Green",
+  description:
+    "News, interviews, and resources about Bright Green. For media inquiries, get in touch any time.",
 };
+
+const pressItems = [
+  // TODO: Replace with real links as they publish.
+  // Example item:
+  // {
+  //   title: "Bright Green launches a people-powered climate effort",
+  //   outlet: "Local News",
+  //   href: "https://example.com/article",
+  //   date: "2025-08-15",
+  // },
+];
 
 export default function PressPage() {
   return (
-    <main className="container" style={{ padding: "40px 0" }}>
-      <h1>Press & Media</h1>
-      <div className="prose">
-        <p>
-          For interviews or statements, email <a href="mailto:brightgreenpac@gmail.com">brightgreenpac@gmail.com</a>.
-        </p>
-        <h2>Boilerplate</h2>
-        <p>
-          Bright Green PAC supports candidates and policies that move communities
-          toward a cleaner economy, fair elections, and climate resilience.
-        </p>
-        <h2>Logos</h2>
-        <ul>
-          <li><a href="/images/brand/bright-green-fullcolor.svg">Full color SVG</a></li>
-          <li><a href="/images/brand/bright-green-white.svg">Reversed (white) SVG</a></li>
-          <li><a href="/images/brand/bright-green-mono.svg">Monochrome SVG</a></li>
-        </ul>
-        <h2>One‑pager</h2>
-        <p>
-          See our brief overview in <a href="/site.webmanifest">site manifest</a> and
-          the design tokens in <a href="/docs/Style.html">Style Guide</a>. A printable
-          press kit PDF will be posted here soon.
-        </p>
-      </div>
+    <main id="main-content" className="container" style={{ paddingBlock: "var(--s-12)" }}>
+      <section aria-labelledby="press-heading" className="flow-2">
+        <h1 id="press-heading">Press</h1>
+
+        {/* Brief intro */}
+        <Prose>
+          <p className="muted">
+            Coverage and updates about Bright Green. For interviews or background, reach out — we’re happy
+            to help.
+          </p>
+        </Prose>
+
+        {/* Card list */}
+        {pressItems.length > 0 ? (
+          <div
+            className="grid"
+            style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}
+            aria-label="Press coverage"
+          >
+            {pressItems.map((item, i) => (
+              <article
+                key={`${item.href}-${i}`}
+                className="rounded shadow"
+                style={{
+                  border: "1px solid var(--border)",
+                  background: "#fff",
+                  padding: "16px",
+                }}
+              >
+                <h3 style={{ marginBottom: 6 }}>
+                  <Link href={item.href} target="_blank" rel="noopener noreferrer">
+                    {item.title}
+                  </Link>
+                </h3>
+                <p className="muted" style={{ marginBottom: 10 }}>
+                  {item.outlet}
+                  {item.date ? ` · ${new Date(item.date).toLocaleDateString()}` : ""}
+                </p>
+                <Link
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--outline"
+                  aria-label={`Read: ${item.title}`}
+                >
+                  Read
+                </Link>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p className="muted" aria-live="polite">
+            Press clips will appear here as they’re published.
+          </p>
+        )}
+
+        {/* Media inquiries CTA */}
+        <div style={{ marginTop: "var(--s-8)" }}>
+          <Link href="/contact" className="btn btn--secondary" aria-label="Contact Bright Green for media inquiries">
+            Media inquiries
+          </Link>
+        </div>
+      </section>
     </main>
   );
 }

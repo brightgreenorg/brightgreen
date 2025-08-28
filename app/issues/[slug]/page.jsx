@@ -1,46 +1,56 @@
-// REPLACE FILE: app/issues/[slug]/page.jsx
-import { notFound } from 'next/navigation';
-import { getIssueBySlug, listIssueSlugs } from '../../../lib/mdx';
-
-export async function generateStaticParams() {
-  const slugs = await listIssueSlugs(); // only build pages that actually exist on disk
-  return slugs.map((slug) => ({ slug }));
-}
+// app/issues/[slug]/page.jsx
+import Link from "next/link";
+import Prose from "../../../components/Prose";
+import { listIssuesMeta, getIssueBySlug } from "../../../lib/mdx";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }) {
-  const { slug } = params;
-  try {
-    const issue = await getIssueBySlug(slug);
-    const title = issue?.title ?? issue?.frontmatter?.title ?? slug;
-    const description = issue?.description ?? issue?.frontmatter?.description ?? '';
-    return { title: `${title} · Issues`, description };
-  } catch {
-    return { title: `Issue · ${slug}` };
-  }
+  // Use the lightweight index for metadata (fast path)
+  const issues = await listIssuesMeta();
+  const issue = issues.find((i) => i.slug === params.slug);
+  if (!issue) return { title: "Issue not found — Bright Green" };
+  return {
+    title: `${issue.title} — Bright Green`,
+    description: issue.summary ?? "Issue details from Bright Green.",
+  };
 }
 
-export default async function IssuePage({ params }) {
-  const { slug } = params;
+export default async function IssueDetailPage({ params }) {
+  // Load full MDX content + frontmatter
+  const data = await getIssueBySlug(params.slug);
+  if (!data || !data.meta) notFound();
 
-  let issue;
-  try {
-    issue = await getIssueBySlug(slug);
-  } catch {
-    notFound();
-  }
-  if (!issue) notFound();
-
-  const title = issue.title ?? issue.frontmatter?.title ?? slug;
-  const description = issue.description ?? issue.frontmatter?.description ?? '';
-  const html = issue.html ?? '';
+  const { meta, Content } = data;
 
   return (
-    <div className="container">
-      <article className="prose">
-        <h1>{title}</h1>
-        {description && <p className="muted">{description}</p>}
-        <div dangerouslySetInnerHTML={{ __html: html }} />
+    <main id="main-content" className="container" style={{ paddingBlock: "var(--s-12)" }}>
+      <nav aria-label="Breadcrumb" className="flow-1" style={{ marginBottom: "var(--s-6)" }}>
+        <Link href="/issues" className="btn btn--outline" aria-label="Back to all issues">
+          ← Back to Issues
+        </Link>
+      </nav>
+
+      <article aria-labelledby="issue-title" className="flow-2">
+        <h1 id="issue-title">{meta.title}</h1>
+
+        {/* Lede from frontmatter (optional) */}
+        {meta.summary ? <p className="muted">{meta.summary}</p> : null}
+
+        {/* MDX body */}
+        {Content ? (
+          <Prose>
+            <Content />
+          </Prose>
+        ) : (
+          <Prose>
+            <p>
+              Full issue content will appear here once{" "}
+              <code>/content/issues/{params.slug}.md</code> includes a body. For now, this page
+              shows the title and summary from frontmatter.
+            </p>
+          </Prose>
+        )}
       </article>
-    </div>
+    </main>
   );
 }

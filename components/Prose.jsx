@@ -1,3 +1,4 @@
+// components/Prose.jsx
 /**
  * Typographic wrapper for long-form content (MD/MDX).
  * Props:
@@ -13,11 +14,15 @@ export default function Prose({
   ...props
 }) {
   const widthStyle =
-    maxWidth === "wide" ? { maxWidth: "90ch" } : maxWidth === "full" ? { maxWidth: "none" } : undefined;
+    maxWidth === "wide"
+      ? { maxWidth: "90ch" }
+      : maxWidth === "full"
+      ? { maxWidth: "none" }
+      : undefined;
 
   return (
     <Tag
-      className={`prose ${className}`.trim()}
+      className={`u-prose ${className}`.trim()}
       style={{ ...widthStyle, ...style }}
       {...props}
     />

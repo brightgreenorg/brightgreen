@@ -1,3 +1,4 @@
+// components/SkipNav.jsx
 "use client";
 
 import { useState, useCallback } from "react";
@@ -17,25 +18,10 @@ export default function SkipNav() {
       href="#main-content"
       onFocus={onFocus}
       onBlur={onBlur}
-      className={!show ? "sr-only" : undefined}
-      style={
+      className={
         show
-          ? {
-              position: "fixed",
-              top: 8,
-              left: 8,
-              zIndex: 50,
-              background: "#fff",
-              color: "#111",
-              padding: "10px 14px",
-              borderRadius: 12,
-              boxShadow: "var(--shadow)",
-              textDecoration: "none",
-              fontWeight: 700,
-              fontFamily:
-                "var(--font-display, 'League Spartan'), system-ui, sans-serif",
-            }
-          : undefined
+          ? "fixed top-2 left-2 z-50 bg-white text-black px-3.5 py-2.5 rounded-xl shadow font-extrabold no-underline"
+          : "sr-only"
       }
     >
       Skip to content

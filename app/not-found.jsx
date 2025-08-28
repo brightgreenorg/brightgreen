@@ -9,27 +9,15 @@ export const metadata = {
 
 export default function NotFound() {
   return (
-    <main className="container" style={{ paddingBlock: "64px" }}>
-      <section
-        aria-labelledby="nf-title"
-        className="rounded shadow"
-        style={{
-          background: "var(--bg)",
-          border: "1px solid var(--border)",
-          padding: "32px",
-        }}
-      >
+    <main className="container u-section">
+      <article className="u-card p-8 md:p-10 border border-[var(--border)]">
         {/* Brand-y illustration (inline SVG uses core palette) */}
         <div
           aria-hidden="true"
-          className="rounded"
+          className="rounded mx-auto mb-4 flex items-center justify-center"
           style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
             width: 96,
             height: 96,
-            marginBottom: 16,
             background:
               "linear-gradient(135deg, var(--lime) 0%, var(--yellow) 100%)",
             boxShadow: "var(--shadow)",
@@ -60,15 +48,17 @@ export default function NotFound() {
           </svg>
         </div>
 
-        <h1 id="nf-title" style={{ marginTop: 8 }}>We can’t find that page</h1>
-        <p className="muted" style={{ marginTop: 12, maxWidth: "60ch" }}>
-          The link may be broken or the page may have moved. Let’s get you back
-          to something good—donations, volunteering, or our current issues.
-        </p>
+        <div className="u-prose text-center">
+          <h1 id="nf-title">We can’t find that page</h1>
+          <p className="muted max-w-[60ch] mx-auto">
+            The link may be broken or the page may have moved. Let’s get you back
+            to something good—donations, volunteering, or our current issues.
+          </p>
+        </div>
 
         {/* Action row */}
-        <div className="flow-1" style={{ marginTop: 24 }}>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+        <div className="flow-1 mt-6">
+          <div className="flex flex-wrap gap-3 justify-center">
             <Link href="/" className="btn btn--primary">
               Back to Home
             </Link>
@@ -84,20 +74,16 @@ export default function NotFound() {
           </div>
 
           {/* Helpful links list for A11y + navigation */}
-          <nav aria-label="Popular destinations" style={{ marginTop: 12 }}>
-            <ul
-              style={{
-                listStyle: "disc",
-                paddingLeft: "1.25rem",
-                margin: 0,
-                color: "var(--muted)",
-              }}
-            >
+          <nav
+            aria-label="Popular destinations"
+            className="mt-4 text-left text-[var(--muted)]"
+          >
+            <ul className="list-disc pl-5 space-y-1">
               <li>
                 <Link href="/about">About Bright Green</Link>
               </li>
               <li>
-                <Link href="/press">Press & Media Kit</Link>
+                <Link href="/press">Press &amp; Media Kit</Link>
               </li>
               <li>
                 <Link href="/contact">Contact</Link>
@@ -105,7 +91,7 @@ export default function NotFound() {
             </ul>
           </nav>
         </div>
-      </section>
+      </article>
     </main>
   );
 }

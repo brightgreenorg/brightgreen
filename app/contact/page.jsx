@@ -1,24 +1,53 @@
 // app/contact/page.jsx
-export const metadata = {
-  title: "Contact",
-  description: "Reach out with questions or ideas.",
-};
+import Link from "next/link";
+import Prose from "../../components/Prose";
+import DonateButton from "../../components/DonateButton";
 
-const MAILTO = "mailto:brightgreenpac@gmail.com?subject=Hello%20from%20the%20site";
+export const metadata = {
+  title: "Contact — Bright Green",
+  description:
+    "Get in touch with Bright Green for questions, volunteering, or media inquiries.",
+};
 
 export default function ContactPage() {
   return (
-    <main className="container" style={{ padding: "40px 0" }}>
-      <h1>Contact</h1>
-      <div className="prose">
-        <p>
-          We welcome thoughtful feedback, collaboration ideas, and questions.
-          Email us directly or use the button below.
-        </p>
-      </div>
-      <a className="btn btn--secondary" href={MAILTO} style={{ marginTop: 16 }}>
-        Email Bright Green
-      </a>
+    <main id="main-content" className="container" style={{ paddingBlock: "var(--s-12)" }}>
+      <section aria-labelledby="contact-heading" className="flow-2">
+        <h1 id="contact-heading">Contact</h1>
+
+        <Prose>
+          <p className="muted">
+            We’d love to hear from you. Choose the option that fits and we’ll get back to you.
+          </p>
+
+          <ul>
+            <li>
+              <strong>Email:</strong>{" "}
+              <a href="mailto:hello@brightgreen.org">hello@brightgreen.org</a>
+            </li>
+            <li>
+              <strong>Media:</strong>{" "}
+              <Link href="/press">press resources &amp; inquiries</Link>
+            </li>
+            <li>
+              <strong>Volunteer:</strong>{" "}
+              <Link href="/volunteer">raise your hand to help</Link>
+            </li>
+            <li>
+              <strong>Donate:</strong>{" "}
+              <Link href="/donate">support the work</Link>
+            </li>
+          </ul>
+        </Prose>
+
+        {/* Quick action row */}
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <a href="mailto:hello@brightgreen.org" className="btn btn--secondary" aria-label="Email Bright Green">
+            Email us
+          </a>
+          <DonateButton variant="alt" dataAttrs={{ source: "contact-cta" }} />
+        </div>
+      </section>
     </main>
   );
 }

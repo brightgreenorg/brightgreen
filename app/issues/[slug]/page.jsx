@@ -1,56 +1,38 @@
 // app/issues/[slug]/page.jsx
-import Link from "next/link";
-import Prose from "../../../components/Prose";
-import { listIssuesMeta, getIssueBySlug } from "../../../lib/mdx";
 import { notFound } from "next/navigation";
+import { getIssueBySlug, listIssueSlugs } from "../../../lib/mdx";
+import Prose from "../../../components/Prose";
+
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const slugs = await listIssueSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
 
 export async function generateMetadata({ params }) {
-  // Use the lightweight index for metadata (fast path)
-  const issues = await listIssuesMeta();
-  const issue = issues.find((i) => i.slug === params.slug);
-  if (!issue) return { title: "Issue not found — Bright Green" };
+  const { title, description } = await getIssueBySlug(params.slug);
   return {
-    title: `${issue.title} — Bright Green`,
-    description: issue.summary ?? "Issue details from Bright Green.",
+    title: title || "Issue",
+    description: description || undefined,
   };
 }
 
-export default async function IssueDetailPage({ params }) {
-  // Load full MDX content + frontmatter
+export default async function IssuePage({ params }) {
   const data = await getIssueBySlug(params.slug);
-  if (!data || !data.meta) notFound();
+  if (!data || data.published === false) {
+    notFound();
+  }
 
-  const { meta, Content } = data;
+  const { title, summary, html } = data;
 
   return (
-    <main id="main-content" className="container" style={{ paddingBlock: "var(--s-12)" }}>
-      <nav aria-label="Breadcrumb" className="flow-1" style={{ marginBottom: "var(--s-6)" }}>
-        <Link href="/issues" className="btn btn--outline" aria-label="Back to all issues">
-          ← Back to Issues
-        </Link>
-      </nav>
-
-      <article aria-labelledby="issue-title" className="flow-2">
-        <h1 id="issue-title">{meta.title}</h1>
-
-        {/* Lede from frontmatter (optional) */}
-        {meta.summary ? <p className="muted">{meta.summary}</p> : null}
-
-        {/* MDX body */}
-        {Content ? (
-          <Prose>
-            <Content />
-          </Prose>
-        ) : (
-          <Prose>
-            <p>
-              Full issue content will appear here once{" "}
-              <code>/content/issues/{params.slug}.md</code> includes a body. For now, this page
-              shows the title and summary from frontmatter.
-            </p>
-          </Prose>
-        )}
-      </article>
+    <main className="container u-section">
+      <h1>{title}</h1>
+      {summary ? <p className="text-lg text-muted-foreground mb-6">{summary}</p> : null}
+      <Prose>
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      </Prose>
     </main>
   );
 }

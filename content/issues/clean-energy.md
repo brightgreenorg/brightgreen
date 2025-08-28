@@ -1,6 +1,9 @@
 ---
+author: Glen Phillips
 title: Clean Energy
 slug: clean-energy
+image: /images/issues/<slug>-card.avif
+image_alt: short description
 summary: Practical, job-creating steps to accelerate a clean grid and clean transportation.
 description: Practical, job-creating steps to accelerate a clean grid and transportation.
 date: 2025-08-27

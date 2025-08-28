@@ -24,15 +24,13 @@ export default async function IssuePage({ params }) {
     notFound();
   }
 
-  const { title, summary, html } = data;
+  const { title, summary, contentHtml } = data;
 
   return (
     <main className="container u-section">
       <h1>{title}</h1>
       {summary ? <p className="text-lg text-muted-foreground mb-6">{summary}</p> : null}
-      <Prose>
-        <div dangerouslySetInnerHTML={{ __html: html }} />
-      </Prose>
+      <Prose html={contentHtml} />
     </main>
   );
 }

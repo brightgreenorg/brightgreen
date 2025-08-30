@@ -1,8 +1,10 @@
-// app/page.jsx
+// REPLACE FILE: app/page.jsx
 import Link from "next/link";
 import Hero from "../components/Hero";
 import ArtBlock from "../components/ArtBlock";
+import IssuesCarousel from "../components/issues-carousel";
 import { getIssues } from "../lib/getissues";
+import { listIssuesMeta } from "../lib/mdx";
 
 export const metadata = {
   title: "Bright Green — A people-powered PAC",
@@ -11,7 +13,19 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  const issues = await getIssues({ limit: 3 });
+  const [issues, allIssues] = await Promise.all([
+    getIssues({ limit: 3 }),
+    listIssuesMeta(),
+  ]);
+
+  // Normalize slugs for the carousel (strip .md/.mdx just in case)
+  const carouselIssues = (allIssues || []).map((it) => ({
+    ...it,
+    slug:
+      typeof it.slug === "string"
+        ? it.slug.replace(/\.mdx?$/i, "")
+        : String(it.slug || ""),
+  }));
 
   return (
     <>
@@ -61,6 +75,15 @@ export default async function HomePage() {
               </ul>
             </div>
           </ArtBlock>
+        </section>
+
+        {/* NEW: Issues Carousel (all issues, seeded-random order) */}
+        <section
+          aria-label="Featured issues"
+          className="container"
+          style={{ paddingBottom: "var(--s-12)" }}
+        >
+          <IssuesCarousel issues={carouselIssues} />
         </section>
 
         {/* Latest Issues (sorted by date) */}

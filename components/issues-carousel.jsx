@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
+import IssueTeaser from "./issue-teaser";
 
 /* ---------- Utilities: seeded shuffle ---------- */
 function seededRandom(seed) {
@@ -223,7 +224,7 @@ export default function IssuesCarousel({
 
     // Read half-gap from the slide's computed margin (we set margin-inline: var(--gap)/2)
     const csSlide = getComputedStyle(firstSlide);
-    const halfGap = (parseFloat(csSlide.marginLeft || "0") || 0);
+    const halfGap = parseFloat(csSlide.marginLeft || "0") || 0;
     const gap = halfGap * 2;
 
     // Current paddings (may already include lastExtra)
@@ -319,7 +320,19 @@ export default function IssuesCarousel({
                   i < firstVisible || i > firstVisible + visibleCount - 1 ? "true" : "false"
                 }
               >
-                <Slide issue={issue} renderMedia={renderSet.has(i)} />
+                <Link
+                  href={issue?.slug ? `/issues/${issue.slug}` : "#"}
+                  className="block focus:outline-none focus:ring rounded-[18px]"
+                  aria-label={issue?.title ? `Read: ${issue.title}` : "Read issue"}
+                >
+                  <IssueTeaser
+                    issue={issue}
+                    variant="carousel"
+                    showDate={true}
+                    showTags={false}
+                    ctaLabel="Read"
+                  />
+                </Link>
               </article>
             ))}
           </div>
@@ -382,52 +395,5 @@ export default function IssuesCarousel({
         {liveText}
       </p>
     </section>
-  );
-}
-
-/* ---------- Slide ---------- */
-function Slide({ issue, renderMedia }) {
-  const { slug, title, summary, image } = issue || {};
-  return (
-    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-[var(--surface-2)]">
-      {/* Background image */}
-      {renderMedia ? (
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: image ? `url(${image})` : undefined,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            filter: "saturate(1.05)",
-          }}
-          aria-hidden="true"
-        />
-      ) : null}
-
-      {/* Gradient overlay for readability */}
-      <div
-        className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/20 to-black/0"
-        aria-hidden="true"
-      />
-
-      {/* Text bubble */}
-      <div className="absolute inset-x-3 bottom-3 rounded-2xl bg-white/92 p-3 shadow-xl backdrop-blur-sm md:inset-x-4 md:bottom-4 md:p-4">
-        <h3 className="line-clamp-2 text-balance text-base font-semibold tracking-tight md:text-lg">
-          {title || "Untitled"}
-        </h3>
-        {summary ? (
-          <p className="mt-1 line-clamp-2 text-sm/6 text-neutral-700">{summary}</p>
-        ) : null}
-        <div className="mt-2">
-          <Link
-            href={slug ? `/issues/${slug}` : "#"}
-            className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand-600)] px-3 py-1.5 text-sm text-white shadow hover:bg-[var(--brand-700)] focus:outline-none focus:ring"
-          >
-            Read <span aria-hidden>→</span>
-          </Link>
-        </div>
-      </div>
-    </div>
   );
 }

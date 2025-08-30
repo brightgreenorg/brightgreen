@@ -236,12 +236,12 @@ export default function IssuesCarousel({
       aria-label={ariaLabel}
       className="relative"
     >
-      <div className="overflow-hidden rounded-2xl bg-[var(--surface-1)] shadow-lg">
-        {/* Embla viewport */}
-        <div ref={viewportRef}>
-          {/* Track */}
+      <div className="overflow-hidden rounded-2xl bg-[var(--surface-1)] py-3 shadow-lg md:py-4">
+        {/* Embla viewport with horizontal inset to center the visible cards */}
+        <div ref={viewportRef} className="px-3 md:px-4">
+          {/* Track (no horizontal padding; gap only) */}
           <div
-            className="flex p-3 md:p-4"
+            className="flex"
             style={{
               gap: GAP_VAR,
               ["--gap"]: GAP_VAR,

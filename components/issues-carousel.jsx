@@ -85,7 +85,6 @@ function useWindowedIndices(length, firstIndex, visibleCount, extra = 2) {
     const idx = ((firstIndex + o) % length + length) % length;
     set.add(idx);
   }
-  // also include a few before
   for (let o = 1; o <= extra; o++) {
     const idx = ((firstIndex - o) % length + length) % length;
     set.add(idx);
@@ -133,45 +132,54 @@ export default function IssuesCarousel({
       setSnapCount(emblaApi.scrollSnapList().length);
       onSelect();
     };
-    emblaApi
-      .on("init", onInit)
-      .on("reInit", onInit)
-      .on("select", onSelect);
+    emblaApi.on("init", onInit).on("reInit", onInit).on("select", onSelect);
     onInit();
     return () => {
-      emblaApi
-        .off("init", onInit)
-        .off("reInit", onInit)
-        .off("select", onSelect);
+      emblaApi.off("init", onInit).off("reInit", onInit).off("select", onSelect);
     };
   }, [emblaApi]);
 
   /* Autoplay */
   const timerRef = useRef(null);
-  const clearTimer = () => {
+  const clearTimer = useCallback(() => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
-  };
+  }, []);
   const startTimer = useCallback(() => {
     if (!emblaApi || reduceMotion) return;
     clearTimer();
     timerRef.current = setInterval(() => emblaApi.scrollNext(), interval);
-  }, [emblaApi, interval, reduceMotion]);
+  }, [emblaApi, interval, reduceMotion, clearTimer]);
 
+  /* Start/stop on mount & when reduced-motion changes */
   useEffect(() => {
     if (!emblaApi) return;
-    startTimer();
+    if (reduceMotion) clearTimer();
+    else startTimer();
+  }, [emblaApi, reduceMotion, startTimer, clearTimer]);
+
+  /* Pause on user interaction; resume on end-of-interaction + lifecycle hooks */
+  useEffect(() => {
+    if (!emblaApi) return;
     const stop = () => clearTimer();
+    const resume = () => startTimer();
+
     emblaApi.on("pointerDown", stop);
-    emblaApi.on("scroll", () => {}); // noop, but keeps listener parity
+    emblaApi.on("pointerUp", resume);
+    emblaApi.on("settle", resume);
+    emblaApi.on("reInit", resume);
+
     return () => {
       emblaApi.off("pointerDown", stop);
-      clearTimer();
+      emblaApi.off("pointerUp", resume);
+      emblaApi.off("settle", resume);
+      emblaApi.off("reInit", resume);
     };
-  }, [emblaApi, startTimer]);
+  }, [emblaApi, startTimer, clearTimer]);
 
+  /* Pause on hover/focus; resume on leave/blur */
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
@@ -189,7 +197,17 @@ export default function IssuesCarousel({
       el.removeEventListener("focusin", onFocusIn);
       el.removeEventListener("focusout", onFocusOut);
     };
-  }, [startTimer]);
+  }, [startTimer, clearTimer]);
+
+  /* Pause when tab is hidden; resume when visible */
+  useEffect(() => {
+    const onVis = () => {
+      if (document.hidden) clearTimer();
+      else startTimer();
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, [startTimer, clearTimer]);
 
   /* Lazy windowing set */
   const renderSet = useWindowedIndices(len, selectedSnap, visibleCount, 2);
@@ -200,13 +218,11 @@ export default function IssuesCarousel({
 
   /* A11y announcement text */
   const firstVisible = selectedSnap;
-  const lastVisible = Math.min(selectedSnap + visibleCount - 1, len - 1);
   const liveText =
     len > 0
-      ? `Showing ${firstVisible + 1}–${Math.min(
-          selectedSnap + visibleCount,
-          len
-        )} of ${len}: ${ordered[firstVisible]?.title ?? ""}`
+      ? `Showing ${firstVisible + 1}–${Math.min(firstVisible + visibleCount, len)} of ${len}: ${
+          ordered[firstVisible]?.title ?? ""
+        }`
       : "";
 
   /* Gap (uses your spacing tokens). We set a CSS var to reference in calc(). */

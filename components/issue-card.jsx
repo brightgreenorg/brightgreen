@@ -1,14 +1,14 @@
 // components/issue-card.jsx
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import AutoVisual from "./auto-visual";
 
 /**
- * IssueCard
- * Wide rectangular card with a 1:1 media slot at the top.
- * Expects: { slug, title, summary, date, tags?, image?, imageAlt? }
+ * IssueCard — background image with bottom "bubble" content.
+ *
+ * Props:
+ *  - slug, title, summary, date, tags (string[])
+ *  - image (optional), imageAlt (optional)
  */
 export default function IssueCard({
   slug,
@@ -19,16 +19,21 @@ export default function IssueCard({
   image,
   imageAlt,
 }) {
+  const cleanSlug =
+    typeof slug === "string" ? slug.replace(/\.mdx?$/i, "") : String(slug || "");
+  const href = `/issues/${cleanSlug}`;
   const alt = imageAlt || title || "Issue image";
 
   return (
     <article
-      className="rounded-2xl overflow-hidden border border-[var(--border)] bg-white shadow-card focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-black/80"
-      aria-labelledby={`issue-card-${slug}`}
+      className="relative u-card border border-[var(--border)] overflow-hidden rounded-2xl"
+      tabIndex={0}
+      aria-label={title ? `Issue: ${title}` : "Issue"}
+      style={{ aspectRatio: "4 / 3" }}
     >
-      {/* 1:1 media slot */}
-      <div className="relative w-full aspect-square bg-[var(--surface-2)]">
-        {image ? (
+      {/* Background visual (image or deterministic fallback) */}
+      <div className="absolute inset-0">
+        {isValidImageSrc(image) ? (
           <Image
             src={image}
             alt={alt}
@@ -39,55 +44,92 @@ export default function IssueCard({
           />
         ) : (
           <AutoVisual
-            seed={`${slug}|${(tags || []).join(",")}`}
+            seed={`${cleanSlug}|${(tags || []).join(",")}`}
             className="absolute inset-0"
             role="img"
-            aria-label={`${title} — generated visual`}
+            aria-label={`${title ?? "Issue"} — generated visual`}
           />
         )}
+
+        {/* Bottom gradient for contrast */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 h-1/2"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,.38) 35%, rgba(0,0,0,0) 100%)",
+          }}
+        />
       </div>
 
-      {/* Body */}
-      <div className="p-5 flow-1">
-        <h3 id={`issue-card-${slug}`} className="line-clamp-2 text-balance">
-          {title}
-        </h3>
+      {/* Bubble content */}
+      <div className="absolute inset-x-3 bottom-3 md:inset-x-4 md:bottom-4">
+        <div className="rounded-xl p-4 md:p-5 bg-white/92 dark:bg-black/70 backdrop-blur-sm border border-[var(--border)] shadow">
+          <h3
+            className="text-xl font-semibold leading-snug"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
+          >
+            {title}
+          </h3>
 
-        {summary ? (
-          <p className="muted line-clamp-3">{summary}</p>
-        ) : null}
-
-        {/* Meta: date + tags (optional) */}
-        <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-[var(--muted)]">
-          {date ? <time dateTime={date}>{formatDate(date)}</time> : null}
-          {tags && tags.length > 0 ? (
-            <>
-              <span aria-hidden="true">•</span>
-              <ul className="flex flex-wrap gap-1">
-                {tags.map((t) => (
-                  <li
-                    key={t}
-                    className="px-2 py-0.5 rounded-full border border-[var(--border)]"
-                  >
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </>
+          {summary ? (
+            <p
+              className="muted mt-2"
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+            >
+              {summary}
+            </p>
           ) : null}
-        </div>
 
-        {/* Read affordance */}
-        <Link
-          href={`/issues/${slug}`}
-          className="btn btn--primary inline-block mt-3"
-          aria-label={`Read more about ${title}`}
-        >
-          Read
-        </Link>
+          {/* Tags */}
+          {Array.isArray(tags) && tags.length > 0 ? (
+            <ul className="mt-2 flex flex-wrap gap-1.5">
+              {tags.map((t) => (
+                <li
+                  key={t}
+                  className="px-2 py-0.5 rounded-full border border-[var(--border)] text-sm bg-white/70 dark:bg-black/40"
+                >
+                  {t}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          {/* Footer: Read + date */}
+          <div className="mt-3 flex items-center gap-3">
+            <Link
+              href={href}
+              className="u-btn u-btn-primary"
+              aria-label={`Read: ${title}`}
+            >
+              Read
+            </Link>
+            {date ? (
+              <time className="muted text-sm" dateTime={date}>
+                {formatDate(date)}
+              </time>
+            ) : null}
+          </div>
+        </div>
       </div>
     </article>
   );
+}
+
+function isValidImageSrc(src) {
+  if (typeof src !== "string") return false;
+  if (!src || src.includes("<") || src.includes(">")) return false;
+  return /\.(avif|webp|jpe?g|png)$/i.test(src);
 }
 
 function formatDate(iso) {

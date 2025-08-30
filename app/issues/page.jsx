@@ -1,5 +1,5 @@
 // app/issues/page.jsx
-import Link from "next/link";
+import IssueCard from "../../components/issue-card";
 import { listIssuesMeta } from "../../lib/mdx";
 
 export const metadata = {
@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 export default async function IssuesPage() {
-  const issues = await listIssuesMeta();
+  const issues = await listIssuesMeta(); // returns newest-first per mdx.js
 
   return (
     <main id="main-content" className="container u-section">
@@ -17,27 +17,18 @@ export default async function IssuesPage() {
 
         <div
           className="grid"
-          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}
         >
           {issues.length > 0 ? (
             issues.map((issue) => {
-              const hrefSlug =
-                typeof issue.slug === "string" ? issue.slug.replace(/\.md$/i, "") : issue.slug;
+              const slug =
+                typeof issue.slug === "string" ? issue.slug.replace(/\.mdx?$/i, "") : String(issue.slug || "");
               return (
-                <article
+                <IssueCard
                   key={issue.slug}
-                  className="rounded-2xl p-5 border border-[var(--border)] bg-white shadow-card flow-1"
-                >
-                  <h3>{issue.title}</h3>
-                  <p className="muted">{issue.summary}</p>
-                  <Link
-                    href={`/issues/${hrefSlug}`}
-                    className="btn btn--primary inline-block mt-2"
-                    aria-label={`Read more about ${issue.title}`}
-                  >
-                    Read more
-                  </Link>
-                </article>
+                  slug={slug}
+                  {...issue} // pass through title, summary, date, tags, image, imageAlt (if present)
+                />
               );
             })
           ) : (

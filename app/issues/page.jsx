@@ -1,41 +1,50 @@
 // app/issues/page.jsx
-import IssueCard from "../../components/issue-card";
-import { listIssuesMeta } from "../../lib/mdx";
+import Link from "next/link";
+import EngagementRail from "@/components/engagement-rail";
+import { listIssuesMeta } from "@/lib/mdx";
 
 export const metadata = {
-  title: "Issues — Bright Green",
-  description: "Learn about the issues Bright Green is tackling and why they matter.",
+  title: "Issues • Bright Green",
+  description:
+    "Explore Bright Green’s issue briefs and summaries — grounded, transparent, and pragmatic.",
 };
 
-export default async function IssuesPage() {
-  const issues = await listIssuesMeta(); // returns newest-first per mdx.js
+export default async function IssuesIndexPage() {
+  const issues = await listIssuesMeta();
 
   return (
-    <main id="main-content" className="container u-section">
-      <section aria-labelledby="issues-heading" className="flow-2">
-        <h1 id="issues-heading">Issues</h1>
+    <main className="u-section">
+      <div className="container">
+        <header className="flow-2" style={{ marginBottom: "var(--s-6)" }}>
+          <h1>Issues</h1>
+          <p className="muted">Brief summaries and positions, evolving with your input.</p>
+        </header>
 
-        <div
+        <section
           className="grid"
-          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}
+          style={{
+            gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+            gap: "var(--gutter)",
+          }}
         >
-          {issues.length > 0 ? (
-            issues.map((issue) => {
-              const slug =
-                typeof issue.slug === "string" ? issue.slug.replace(/\.mdx?$/i, "") : String(issue.slug || "");
-              return (
-                <IssueCard
-                  key={issue.slug}
-                  slug={slug}
-                  {...issue} // pass through title, summary, date, tags, image, imageAlt (if present)
-                />
-              );
-            })
-          ) : (
-            <p className="muted">No issues found. Please check back soon.</p>
-          )}
-        </div>
-      </section>
+          {issues.map((m) => (
+            <article key={m.slug} className="u-card" style={{ padding: 16 }}>
+              <h2 style={{ fontSize: 20, lineHeight: 1.2, marginBottom: 6 }}>
+                <Link href={`/issues/${m.slug}`}>{m.title}</Link>
+              </h2>
+              {m.summary ? <p className="muted" style={{ fontSize: 14 }}>{m.summary}</p> : null}
+              <div style={{ marginTop: 12 }}>
+                <Link className="btn btn--outline" href={`/issues/${m.slug}`} aria-label={`Read ${m.title}`}>
+                  Read more
+                </Link>
+              </div>
+            </article>
+          ))}
+        </section>
+
+        {/* Subtle end-cap */}
+        <EngagementRail />
+      </div>
     </main>
   );
 }

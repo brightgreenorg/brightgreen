@@ -20,35 +20,26 @@ export default async function IssuesPage() {
           style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}
         >
           {issues.length > 0 ? (
-            issues.map((issue) => (
-              <article
-                key={issue.slug}
-                className="rounded-2xl p-5 border border-[var(--border)] bg-white shadow-card flow-1"
-              >
-                {issue.image ? (
-                  <div className="mb-3 rounded-xl overflow-hidden aspect-[16/9] bg-[var(--surface-2)]">
-                    <img
-                      src={issue.image}
-                      alt={issue.image_alt || issue.title}
-                      loading="lazy"
-                      decoding="async"
-                      sizes="(min-width: 1024px) 320px, 100vw"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ) : null}
-
-                <h3>{issue.title}</h3>
-                <p className="muted">{issue.summary}</p>
-                <Link
-                  href={`/issues/${issue.slug}`}
-                  className="btn btn--primary inline-block mt-2"
-                  aria-label={`Read more about ${issue.title}`}
+            issues.map((issue) => {
+              const hrefSlug =
+                typeof issue.slug === "string" ? issue.slug.replace(/\.md$/i, "") : issue.slug;
+              return (
+                <article
+                  key={issue.slug}
+                  className="rounded-2xl p-5 border border-[var(--border)] bg-white shadow-card flow-1"
                 >
-                  Read more
-                </Link>
-              </article>
-            ))
+                  <h3>{issue.title}</h3>
+                  <p className="muted">{issue.summary}</p>
+                  <Link
+                    href={`/issues/${hrefSlug}`}
+                    className="btn btn--primary inline-block mt-2"
+                    aria-label={`Read more about ${issue.title}`}
+                  >
+                    Read more
+                  </Link>
+                </article>
+              );
+            })
           ) : (
             <p className="muted">No issues found. Please check back soon.</p>
           )}

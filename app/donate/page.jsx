@@ -1,52 +1,89 @@
 // app/donate/page.jsx
-import Prose from "../../components/Prose";
-import DonateButton from "../../components/DonateButton";
+import Link from "next/link";
+
+const DONATE_URL =
+  process.env.NEXT_PUBLIC_DONATE_URL ||
+  "https://secure.democracyengine.com/brightgreen/"; // fallback if env not set
 
 export const metadata = {
-  title: "Donate — Bright Green",
+  title: "Donate • Bright Green",
   description:
-    "Back the work. Every dollar helps us support the right campaigns and causes.",
+    "Support Bright Green’s fairness-first work. Transparent, values-driven, and community-powered.",
 };
 
 export default function DonatePage() {
   return (
-    <main id="main-content" className="container u-section">
-      <article className="u-card p-6 md:p-8 border border-[var(--border)] flow-2">
-        <Prose>
+    <main className="u-section">
+      <div className="container" style={{ maxWidth: 880 }}>
+        {/* Values intro */}
+        <header className="flow-2" style={{ marginBottom: "var(--s-8)" }}>
           <h1>Donate</h1>
           <p className="muted">
-            Bright Green PAC is organized to support candidates and causes aligned with
-            innovation, preservation, and fairness under Oregon law.
+            Your contribution helps us build practical, fairness-first solutions and broaden participation.
+          </p>
+        </header>
+
+        {/* Contribution actions */}
+        <section className="flow-2" style={{ marginBottom: "var(--s-12)" }}>
+          <a
+            href={DONATE_URL}
+            className="btn btn--primary"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-describedby="compliance-text"
+          >
+            Donate via Democracy Engine
+          </a>
+
+          {/* Secondary engagement paths (subtle) */}
+          <div style={{ display: "flex", gap: 14, marginTop: 12, flexWrap: "wrap" }}>
+            <Link href="/volunteer" className="btn btn--secondary" aria-label="Become a volunteer">
+              Become a volunteer
+            </Link>
+            <Link href="/about" className="btn btn--outline" aria-label="Learn more about Bright Green">
+              Learn more
+            </Link>
+          </div>
+        </section>
+
+        {/* Compliance — always visible, full text, no accordions */}
+        <section
+          id="compliance-text"
+          aria-label="Required legal notice"
+          className="prose"
+          style={{
+            borderTop: "1px solid var(--border)",
+            paddingTop: "var(--s-6)",
+            color: "var(--muted)",
+            fontSize: 14,
+          }}
+        >
+          <p><strong>Compliance Notice</strong></p>
+          <p>
+            Federal law requires us to use our best efforts to collect and report the name, mailing
+            address, occupation, and employer of each individual who contributes more than $200 in a
+            calendar year.
+          </p>
+          <p>Contributions are not tax deductible for federal income tax purposes.</p>
+          <p>By clicking “Donate,” you confirm that the following statements are true:</p>
+          <ul>
+            <li>You are a U.S. citizen or lawfully admitted permanent resident (green card holder).</li>
+            <li>This contribution is made from your own funds, and not those of another.</li>
+            <li>This contribution is not made from the funds of a corporation, labor organization, or national bank.</li>
+            <li>You are not a federal contractor.</li>
+            <li>You are at least 18 years old.</li>
+          </ul>
+          <p>
+            <strong>Contribution limits:</strong> An individual may contribute up to $5,000 per
+            calendar year to Bright Green PAC. Federal PACs may also contribute up to $5,000 per
+            calendar year.
           </p>
           <p>
-            Contributions are not tax-deductible. See our{" "}
-            <a href="/compliance">compliance</a> page for details.
+            Bright Green PAC may not accept contributions from corporations, labor organizations,
+            federal government contractors, or foreign nationals (non-green card holders).
           </p>
-        </Prose>
-
-        {/* Primary donate button */}
-        <DonateButton variant="primary" dataAttrs={{ source: "donate-page-main" }} />
-
-        {/* Alt preset options */}
-        <div className="flow-1" style={{ marginTop: "var(--s-6)" }}>
-          <DonateButton variant="alt" dataAttrs={{ amount: "10", source: "donate-10" }}>
-            Give $10
-          </DonateButton>
-          <DonateButton variant="alt" dataAttrs={{ amount: "25", source: "donate-25" }}>
-            Give $25
-          </DonateButton>
-          <DonateButton variant="alt" dataAttrs={{ amount: "50", source: "donate-50" }}>
-            Give $50
-          </DonateButton>
-        </div>
-
-        {/* Compliance small-print */}
-        <p className="muted" style={{ marginTop: "var(--s-8)", fontSize: 14 }}>
-          Contributions are subject to reporting and limits. Bright Green PAC may be
-          required to publicly disclose donor name, city, state, occupation, employer,
-          and amount. Contributions are not tax-deductible.
-        </p>
-      </article>
+        </section>
+      </div>
     </main>
   );
 }

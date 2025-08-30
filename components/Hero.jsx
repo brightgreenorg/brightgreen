@@ -1,41 +1,74 @@
-import Link from "next/link";
+// components/Helro.jsx
+"use client";
+
 import Image from "next/image";
 
-export default function Hero() {
+/**
+ * Hero (CTA-free, overlay copy on photo)
+ * - Background art layer is absolutely positioned to fill the section.
+ * - Copy layer sits above via z-index, restoring the prior overlay effect.
+ */
+
+export default function Hero({
+  title = "Bright Green",
+  eyebrow,
+  subtitle,
+  imgDesktop = "/images/hero-desktop.avif",
+  imgTablet = "/images/hero-tablet.avif",
+  imgMobile = "/images/hero-mobile.avif",
+  focal = "center 35%",
+  fullBleed = false,
+  onPhoto = true,
+}) {
   return (
-    <section className="hero hero--full hero--on-photo">
-      {/* Full-bleed image */}
-      <Image
-        src="/images/hero-desktop.jpg"
-        alt="Bright, optimistic Oregon scene"
-        priority
-        fill
-        sizes="100vw"
-      />
+    <section
+      className={[
+        "hero",
+        fullBleed ? "hero--full" : "",
+        onPhoto ? "hero--on-photo" : "",
+      ].join(" ")}
+      style={{ position: "relative" }}
+    >
+      {/* Background art fills the entire hero */}
+      <div
+        className="hero-art"
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
+          ["--focal"]: focal,
+        }}
+        aria-hidden="true"
+      >
+        <Image
+          src={imgDesktop}
+          alt=""
+          priority
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw"
+        />
+        <div className="hero__fade" />
+      </div>
 
-      {/* Bottom-only fade */}
-      <div className="hero__fade" aria-hidden="true" />
-
-      {/* Split layout */}
-      <div className="container hero__inner hero__inner--split relative z-10">
-        <div className="hero__copy flow-2 max-w-[60ch]">
-          <h1>Bright Green for a livable future</h1>
-          <p className="muted">
-            Energy, optimism, and action. Join us to accelerate practical climate
-            solutions and fair elections.
-          </p>
+      {/* Foreground copy overlays the image */}
+      <div
+        className="hero__inner hero__inner--split container"
+        style={{ position: "relative", zIndex: 1 }}
+      >
+        <div className="hero__copy flow-2">
+          {eyebrow ? (
+            <p className="muted" aria-label="Section label">
+              {eyebrow}
+            </p>
+          ) : null}
+          <h1>{title}</h1>
+          {subtitle ? <p>{subtitle}</p> : null}
+          {/* CTAs intentionally omitted per Option 4A */}
         </div>
 
-        <div className="hero__spacer" aria-hidden="true" />
-
-        <div className="hero__cta">
-          <Link href="/donate" className="btn btn--primary">
-            Donate
-          </Link>
-          <Link href="/volunteer" className="btn btn--secondary">
-            Volunteer
-          </Link>
-        </div>
+        {/* Spacer rows preserve the split rhythm */}
+        <div />
+        <div aria-hidden="true" />
       </div>
     </section>
   );

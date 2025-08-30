@@ -1,55 +1,37 @@
+// components/Header.jsx
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export default function Header() {
-  const pathname = usePathname() || "/";
-
-  const nav = [
-    { label: "Home", href: "/" },
-    { label: "Issues", href: "/issues" },
-    { label: "About", href: "/about" },
-    { label: "Press", href: "/press" },
-    { label: "Volunteer", href: "/volunteer" },
-  ];
-
-  const isActive = (href) =>
-    pathname === href || (href !== "/" && pathname.startsWith(href));
-
   return (
-    <header className="sticky top-0 z-40 bg-[var(--black)] text-white border-b border-white/10">
-      <div className="container flex items-center justify-between gap-3 py-3.5">
-        <Link
-          href="/"
-          className="font-display font-extrabold text-lg tracking-wide text-white"
-          aria-label="Bright Green PAC — Home"
+    <header className="site-header" role="banner">
+      <div className="container" style={{ display: "flex", alignItems: "center", gap: 16, paddingBlock: 14 }}>
+        {/* Brand */}
+        <div style={{ flex: "0 0 auto" }}>
+          <Link href="/" aria-label="Bright Green home">
+            <span style={{ fontWeight: 800 }}>Bright Green</span>
+          </Link>
+        </div>
+
+        {/* Primary nav */}
+        <nav
+          aria-label="Primary"
+          style={{ display: "flex", gap: 18, alignItems: "center", marginLeft: "auto", marginRight: 16 }}
         >
-          Bright Green PAC
-        </Link>
+          <Link href="/issues">Issues</Link>
+          <Link href="/about">About</Link>
+        </nav>
 
-        <nav aria-label="Primary" className="flex flex-wrap gap-2">
-          {nav.map(({ label, href }) => {
-            const active = isActive(href);
-            return (
-              <Link
-                key={href}
-                href={href}
-                aria-current={active ? "page" : undefined}
-                className={`px-3 py-2 rounded-full font-semibold ${
-                  active ? "bg-white/15" : "hover:bg-white/10"
-                }`}
-              >
-                {label}
-              </Link>
-            );
-          })}
-
-          {/* CTA stays a button */}
-          <Link href="/donate" className="btn btn--primary">
+        {/* CTAs — Volunteer (green) first, Donate (violet) second */}
+        <div className="header-ctas" style={{ display: "flex", gap: 10 }}>
+          <Link href="/volunteer" className="btn btn--secondary" aria-label="Become a volunteer">
+            Volunteer
+          </Link>
+          <Link href="/donate" className="btn btn--primary" aria-label="Go to the Donate page">
             Donate
           </Link>
-        </nav>
+        </div>
       </div>
     </header>
   );

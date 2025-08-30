@@ -132,11 +132,12 @@
     display: grid;
     align-items: stretch;
     isolation: isolate;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    /* Removed radius + shadow for global full-bleed */
+    border-radius: 0;
+    box-shadow: none;
   }
 
-  /* Full-bleed variant: removes rounding/shadow so image touches edges */
+  /* Full-bleed variant: (kept for compatibility) */
   .hero--full {
     border-radius: 0;
     box-shadow: none;

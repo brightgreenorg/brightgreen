@@ -153,14 +153,12 @@ export default function IssuesCarousel({
     timerRef.current = setInterval(() => emblaApi.scrollNext(), interval);
   }, [emblaApi, interval, reduceMotion, clearTimer]);
 
-  /* Start/stop on mount & when reduced-motion changes */
   useEffect(() => {
     if (!emblaApi) return;
     if (reduceMotion) clearTimer();
     else startTimer();
   }, [emblaApi, reduceMotion, startTimer, clearTimer]);
 
-  /* Pause on user interaction; resume on end-of-interaction + lifecycle hooks */
   useEffect(() => {
     if (!emblaApi) return;
     const stop = () => clearTimer();
@@ -179,7 +177,6 @@ export default function IssuesCarousel({
     };
   }, [emblaApi, startTimer, clearTimer]);
 
-  /* Pause on hover/focus; resume on leave/blur */
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
@@ -199,7 +196,6 @@ export default function IssuesCarousel({
     };
   }, [startTimer, clearTimer]);
 
-  /* Pause when tab is hidden; resume when visible */
   useEffect(() => {
     const onVis = () => {
       if (document.hidden) clearTimer();
@@ -208,6 +204,68 @@ export default function IssuesCarousel({
     document.addEventListener("visibilitychange", onVis);
     return () => document.removeEventListener("visibilitychange", onVis);
   }, [startTimer, clearTimer]);
+
+  /* === Seam-gap fix v2: half-margins on slides + base half-gap padding on viewport === */
+  const basePadL = useRef(null);
+  const basePadR = useRef(null);
+  const lastExtra = useRef(0);
+
+  const measureAndPad = useCallback(() => {
+    if (!emblaApi) return;
+    const viewportEl = emblaApi.rootNode();
+    const trackEl = emblaApi.containerNode();
+    if (!viewportEl || !trackEl) return;
+
+    const firstSlide = trackEl.querySelector("article");
+    if (!firstSlide) return;
+
+    const slideWidth = firstSlide.getBoundingClientRect().width;
+
+    // Read half-gap from the slide's computed margin (we set margin-inline: var(--gap)/2)
+    const csSlide = getComputedStyle(firstSlide);
+    const halfGap = (parseFloat(csSlide.marginLeft || "0") || 0);
+    const gap = halfGap * 2;
+
+    // Current paddings (may already include lastExtra)
+    const csViewport = getComputedStyle(viewportEl);
+    const padLNow = parseFloat(csViewport.paddingLeft || "0") || 0;
+    const padRNow = parseFloat(csViewport.paddingRight || "0") || 0;
+
+    // True content width excludes padding
+    const vpContentWidth = viewportEl.clientWidth - padLNow - padRNow;
+
+    if (vpContentWidth <= 0 || slideWidth <= 0) {
+      requestAnimationFrame(measureAndPad);
+      return;
+    }
+
+    const groupWidth = slideWidth * visibleCount + gap * Math.max(visibleCount - 1, 0);
+    const remainder = Math.max(0, vpContentWidth - groupWidth);
+    const extra = Math.round(remainder / 2);
+
+    // Record base (half-gap paddings without extra) once
+    if (basePadL.current == null || basePadR.current == null) {
+      basePadL.current = padLNow - (lastExtra.current || 0);
+      basePadR.current = padRNow - (lastExtra.current || 0);
+    }
+
+    viewportEl.style.paddingLeft = `${(basePadL.current || 0) + extra}px`;
+    viewportEl.style.paddingRight = `${(basePadR.current || 0) + extra}px`;
+    lastExtra.current = extra;
+  }, [emblaApi, visibleCount]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onInit = () => measureAndPad();
+    emblaApi.on("init", onInit).on("reInit", onInit);
+    onInit();
+    const onResize = () => measureAndPad();
+    window.addEventListener("resize", onResize);
+    return () => {
+      emblaApi.off("init", onInit).off("reInit", onInit);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [emblaApi, measureAndPad]);
 
   /* Lazy windowing set */
   const renderSet = useWindowedIndices(len, selectedSnap, visibleCount, 2);
@@ -225,7 +283,7 @@ export default function IssuesCarousel({
         }`
       : "";
 
-  /* Gap (uses your spacing tokens). We set a CSS var to reference in calc(). */
+  /* Gap token to share via CSS custom property */
   const GAP_VAR = "var(--s-4)";
   const slideBasis = `calc((100% - (var(--gap) * ${Math.max(visibleCount - 1, 0)})) / ${visibleCount})`;
 
@@ -237,16 +295,17 @@ export default function IssuesCarousel({
       className="relative"
     >
       <div className="overflow-hidden rounded-2xl bg-[var(--surface-1)] py-3 shadow-lg md:py-4">
-        {/* Embla viewport with horizontal inset to center the visible cards */}
-        <div ref={viewportRef} className="px-3 md:px-4">
-          {/* Track (no horizontal padding; gap only) */}
-          <div
-            className="flex"
-            style={{
-              gap: GAP_VAR,
-              ["--gap"]: GAP_VAR,
-            }}
-          >
+        {/* Embla viewport: set --gap and base half-gap padding; measurement may add tiny extra */}
+        <div
+          ref={viewportRef}
+          style={{
+            ["--gap"]: GAP_VAR,
+            paddingLeft: "calc(var(--gap) / 2)",
+            paddingRight: "calc(var(--gap) / 2)",
+          }}
+        >
+          {/* Track (pure flex; margins on slides create gaps) */}
+          <div className="flex">
             {ordered.map((issue, i) => (
               <article
                 key={issue.slug || i}
@@ -254,6 +313,7 @@ export default function IssuesCarousel({
                 style={{
                   flex: `0 0 ${slideBasis}`,
                   minWidth: slideBasis,
+                  marginInline: "calc(var(--gap) / 2)",
                 }}
                 aria-hidden={
                   i < firstVisible || i > firstVisible + visibleCount - 1 ? "true" : "false"
